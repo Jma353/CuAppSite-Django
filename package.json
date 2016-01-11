@@ -1,0 +1,29 @@
+{
+  "name": "cuappsite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jma353/CuAppSite-Django.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jma353/CuAppSite-Django/issues"
+  },
+  "homepage": "https://github.com/Jma353/CuAppSite-Django#readme",
+  "devDependencies": {
+    "bower": "^1.3.12",
+    "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1", 
+    "gulp-clean": "^0.3.1",
+    "gulp-size": "^1.2.1",
+    "react": "^0.13.0", 
+    "reactify": "^1.0.0",
+    "react-loading": "^0.0.7"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "cuappsite",
+  "homepage": "https://github.com/Jma353/CuAppSite-Django",
+  "authors": [
+    "Jma353 <jma353@cornell.edu>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ], 
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "jquery": "~2.1.3", 
+    "react": "~0.12.2",
+    "paper-less": "*",
+    "animo.js": "*", 
+    "underscore": "*",
+    "jquery.scrollTo": "*"
+  }
+}
