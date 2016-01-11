@@ -3,5 +3,73 @@
 
 
 {% block content %}
-<h1>#Home</h1> 
+
+
+<div class="row">
+	<img src="{% static 'images/clocktower.png' %}?{% now 'U' %}" class="imagez" />
+</div>
+
+
+<div class="white-barz" style="padding-top:20px;padding-bottom:20px;">
+	<div class="text-center slogan">We make apps</div>
+</div>  
+
+<div class="black-barz">
+	<p class="text-white">Cornell App Development is a project team at Cornell University dedicated 
+		to mobile app development</p>
+</div>
+
+
+<div class="row">
+	<div class="white-barz">
+		<div class=" col-xs-offset-3 	col-sm-offset-3">
+			<img src="{% static 'images/applogo.png' %}" class="development-image" style="width:200px;height:auto;"/>
+		</div>
+		<div class="container col-sm-offset-1 col-xs-12 col-sm-4">
+			<p class="text-black">
+				Every year we take a new app from idea to finished product, culminating with a release on the App Store. 
+				</br>
+				<a class="red-link" href="#">View our past work</a>
+			</p>
+		</div>
+	</div>
+</div>
+
+
+<div class="tsvi-karim">
+	<p class="text text-white">
+		Our team is made up of talented designers and developers who collaborate to bring projects to life. 
+	</p> 
+</div>
+
+
+<div class="black-barz">
+	<p class="text-white">We give students the opportunity to work in a startup environment and gain practical experience in software development.</p>
+</div>
+
+
+<div class="white-barz">
+	<div class="slogan modified-slogan">Want to learn how to make iOS apps?</div>
+	<p class="text-black text-paragraph">
+		Not everyone involved with our team is a coding expert.  Every semester we run a 10 week developer in 
+		training program for Cornell Students interested in learning about iOS development.  Over 300 students 
+		applied last year and less than 10% of them had prior experience developing for the platform.  </br>
+		<a class="red-link" href="{% url 'learn' %}">Learn more about our training program</a>
+	</p>
+</div>
+
+<div class="offwhite-barz">
+	<div class="slogan modified-slogan">Have an idea?</div>
+	<p class="text-black text-paragraph">
+		We are always on the lookout for great app ideas to bring to life.  If you think you have a killer idea, 
+		<a class="red-link" href="#">submit a proposal</a>.  If we choose it, you'll get credit on our site for your stroke of genius!
+	</p>
+</div>
+
+
+<div class="gray-barz">
+	<h1 class="text-large text-white light-face">Join our mailing list</h1>
+</div>
+
+
 {% endblock %}

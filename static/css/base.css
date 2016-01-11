@@ -1,4 +1,294 @@
+/* VARIABLES 
+$primary-padding: 75px;
+$mobile-padding: 50px;
+$red-regular: #C30016;
+$red-hover: #E30000;
+
+*/ 
+
+
 /* Deals with link bolding */
 .bold {
 	font-weight: strong; 
 }
+
+/* For the image of the clocktower */ 
+.imagez {
+	width: 100%;
+	height: auto;
+	z-index: -1;
+}
+
+
+/* Underneath the clocktower, main slogan */
+.slogan {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	color: rgb(193, 0, 0);
+	font-size: 40px;
+}
+
+/* Use in conjunction with slogan for section titles */
+.modified-slogan {
+	padding-top: 0px;
+}
+
+/* BARS
+// Padding required for elements w/in bars so that they expand accordingly 
+// to fit contents 
+*/ 
+
+/* White banner bars on various pages 
+// Nothing about text; strictly the bar itself */ 
+.white-barz {
+	width: 100%;
+	position: relative;
+	padding-top: 75px;
+	padding-bottom: 75px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/* Black banner bars on various pages
+// Nothing about text; strictly the bar itself */
+.black-barz {
+	background-color: rgb(45, 45, 45);
+	position: relative;
+	padding-top: 75px; 
+	padding-bottom: 75px; 
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/* Offwhite banner bars on various pages 
+// Nothing about text; strictly the bar itself */ 
+.offwhite-barz {
+	background-color: rgb(242, 242, 242);
+	position: relative; 
+	padding-top: 75px;
+	padding-bottom: 75px; 
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/* Gray banner bars on various pages 
+// Nothing about text; strictly the bar itself */ 
+.gray-barz {
+	background-color: rgb(149, 149, 149);
+	position: relative;
+	padding-top: 75px;
+	padding-bottom: 75px;
+	padding-left: 20px; 
+	padding-right: 20px;
+}
+
+/* Dark gray banner bars on various pages 
+// Nothing about text; strictly the bar itself */ 
+.darkgray-barz {
+	background-color: rgb(66, 66, 66);
+	position: relative; 
+	padding-top: 75px;
+	padding-bottom: 75px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/* Tsvi and Karim portion of the page */ 
+.tsvi-karim { 
+	background: url('../images/karim-tsvi.png') no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+/* Image of app development */ 
+.development-image {
+	float: left; /* Eliminates the bottom margin for some reason */ 
+	margin-bottom: 100px;
+}
+
+
+/* Used to style white text in various boxes */ 
+.text-white { 
+	font-size: 24px; 
+	color: white; 
+	text-align: center;
+	margin-right: 100px;
+	margin-left: 100px; 
+}
+
+
+/* Used to style black paragraph text on various pages */ 
+.text-black  {
+	font-size: 24px;
+	color: black;
+}
+
+/* Modifies text-white and text-black */ 
+.text-paragraph {
+	margin-right: 100px;
+	margin-left: 100px;
+}
+
+
+/* Red links used on various pages */ 
+.red-link {
+	color: #C30016;
+}
+
+.red-link:hover {
+	color: #E30000;
+	text-decoration: none;
+}
+
+.red-link:active {
+	color: #C30016;
+}
+
+
+/* TOP TEXT OF A SECTION */ 
+.text-top {
+	padding-top: 100px;
+	padding-bottom: 5px;
+	margin-bottom: 0px; // B/c of some bootstrap issue
+}
+
+/* MIDDLE TEXT OF A SECTION */ 
+.text-middle {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-bottom: 0px; // B/c of some bootstrap issue
+}
+
+
+/* BOTTOM TEXT OF A SECTION */ 
+.text-bottom {
+	padding-top: 5px;
+	padding-bottom: 100px;
+	margin-bottom: 0px; // B/c of some bootstrap issue
+}
+
+
+/* TO AUGMENT TEXT MAKE IT LARGER */ 
+.text-large {
+	font-size: 50px;
+}
+
+.text-medium {
+	font-size: 26px;
+}
+
+.text-small {
+	font-size: 16px;
+}
+
+
+/* Padding on larger pages */ 
+@media screen and (max-width: 1600px) {
+	.text {
+		padding-top: 225px;
+		padding-bottom: 225px;
+		text-align: center;
+		margin-bottom: 0px;
+	}
+
+	.modified-slogan {
+		margin-left: 100px;
+	}
+
+}
+
+
+/* Padding on smaller pages */ 
+@media screen and (max-width: 768px) {
+	.text {
+		padding-top: 100px;
+		padding-bottom: 100px;
+		text-align: center; 
+		margin-bottom: 0px;
+	}
+
+	.text-white, .text-black, .text-black-paragraph {
+		margin-left: 10px;
+		margin-right: 10px;
+		font-size: 16px;
+	}
+
+	.modified-slogan {
+		margin-left: 10px;
+	}
+
+	/* Slightly larger than white/black text */ 
+	.text-large {
+		font-size: 22px; 
+	}
+
+	.text-top {
+		padding-top: 60px;
+	}
+
+	.text-bottom { 
+		padding-bottom: 60px;
+	}
+
+	/* Reduced padding for banner bars on mobile */ 
+	.white-barz, 
+	.black-barz, 
+	.offwhite-barz, 
+	.gray-barz, 
+	.darkgray-barz {
+		padding-top: 50px;
+		padding-bottom: 50px;
+	}
+
+	.bullet {
+		padding-bottom: 50px;
+	}
+
+}
+
+
+/* Email input field */ 
+.email-input {
+	border-radius: 10px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	width: 75%; 
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+
+/* Email Bottom Button */ 
+.email-button { 
+	color: white; 
+	background-color: rgb(197, 0, 13);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
