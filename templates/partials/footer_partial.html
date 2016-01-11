@@ -1,0 +1,62 @@
+{% load staticfiles %}
+
+<footer class="footer">
+	<div class="container">
+		<!-- Top bar --> 
+		<div class="row">
+			<a class="col-xs-6 col-md-offset-2 col-md-2 text-center footer-nav" href="/">Home</a>
+			<a class="col-xs-6 col-md-2 text-center footer-nav" href="/apply">Recruitment</a>
+			<a class="col-xs-6 col-md-2 text-center footer-nav" href="/learn">Training</a>
+			<a class="col-xs-6 col-md-2 text-center footer-nav" href="application">Apply</a> 
+		</div> 
+
+		<div class="container col-xs-12 col-md-7">
+
+			<!-- first column row --> 
+			<div class="row">
+				<a href="{% url 'projects' %}" class="col-xs-offset-3 col-xs-2 col-md-3 footer-column">Projects</a>
+				<a href="{% url 'legal' %}" class="col-xs-2 col-md-3 footer-column">Legal</a> 
+				<a href="{% url 'sponsors' %}" class="col-xs-2 col-md-3 footer-column">Sponsors</a> 
+			</div> 
+
+			<!-- second column row --> 
+			<div class="row">
+				<a href="{% url 'team' %}" class="col-xs-offset-3 col-xs-2 col-md-3 footer-column">Team</a> 
+				<a href="https://www.linkedin.com/company/cornell-app-development-cuappdev-" class="col-xs-2 col-md-3 footer-column">LinkedIn</a>
+				<a href="{% url 'contact_us' %}" class="col-xs-2 col-md-3 footer-column" >Contact Us</a>
+			</div> 
+
+			<!-- third column row --> 
+			<div class="row"> 
+				
+				<a class="col-xs-offset-3 col-md-offset-3 col-xs-2 col-md-3 footer-column bottom-row" href="https://github.com/cuappdev">Github</a>
+			</div>
+
+			<!-- fourth column row --> 
+			<div class="row">
+				
+
+			</div>
+
+		</div>
+
+		<div class="col-xs-12 col-md-5">
+			<div class="input-group col-xs-8 col-xs-offset-3 col-md-offset-0">
+				<input type="text" class="email-bar" placeholder="Email">
+				<button class="email text-center">Submit
+				</button>
+			</div>
+			
+
+
+		</div>
+
+		<div class="row copyright col-xs-12 col-md-7">
+			<p class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-12"> &copy; 2016 Cornell App Development - info@cuappdev.org </p> 
+		</div>
+
+	</div>
+
+	
+
+</footer>

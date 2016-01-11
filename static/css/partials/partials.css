@@ -1,0 +1,149 @@
+html {
+  font-family: Helvetica, sans-serif; 
+  font-weight: lighter;
+}
+
+
+/* NAVBAR STUFF */
+ 
+body {
+	margin-top: 90px;
+}
+
+#right-menu {
+	margin-right: 20px;
+}
+
+
+.button {
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 2px solid #C30016;
+  border-radius: 10px;
+  color: #C30016;
+  background: none;
+  margin-bottom: 10px;
+
+
+}
+
+.button:hover {
+  color: #E30000;
+  border-color: #E30000;
+}
+
+.button:active {
+  color: #C30016;
+  border-color: #C30016;
+}
+
+
+
+.navelement {
+  margin-top: 8px;
+  color: #C30016 !important; 
+}
+
+.navelement:hover {
+  text-decoration: none !important; 
+  color: #E30000 !important;  
+}
+
+
+/* FOOTER STUFF */
+
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */ 
+  background-color: rgb(45, 45, 45);
+}
+
+
+/* Footer nav */ 
+.footer-nav {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: white;
+  text-decoration: none;
+
+}
+
+.footer-nav:hover { 
+  text-decoration: none;
+  color: white;
+}
+
+/* Footer column */ 
+.footer-column { 
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 8px;
+  color: white;
+}
+
+.footer-column:hover { 
+  text-decoration: none;
+  color: white; 
+}
+
+.footer-column:active { 
+  text-decoration: none;
+  color: white;
+}
+
+
+/* Extra */ 
+.email-bar {
+  background-color: white;
+  border-radius: 20px;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+
+/* Footer copyright styling */ 
+.copyright {
+  margin-top: 20px;
+  margin-bottom: 20px; 
+  color: white; 
+}
+
+
+/* Email button on footer */ 
+.email {
+  border-radius: 20px;
+  background-color: rgb(56, 134, 255);
+  border-color: rgb(56, 134, 255);
+  color: white; 
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 10px;
+}
+
+
+/* Bottom row of the columns of the footer (added to create space) */ 
+.bottom-row {
+  margin-bottom: 15px;
+}
+
+/* Form stuff */ 
+.form-field {
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 25px;
+}
+
+/* Button stuff */ 
+.button-curved {
+  border-radius: 20px;
+}
+
+
+/* Class to add to form element when there's an error */ 
+.form_error { 
+  border: 1px solid red; 
+}
+

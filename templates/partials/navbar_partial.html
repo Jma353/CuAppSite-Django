@@ -1,0 +1,44 @@
+{% load staticfiles %}
+
+
+<nav class="navbar navbar-fixed-top navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand navelement" href="/">
+				<img src="{% static 'images/cuappdev_logo_720.png' %}" style="width:200px;height:25px;" /> 
+			</a>	
+		</div>
+		<div class="collapse navbar-collapse" id="menu">
+			<ul class="nav navbar-nav navbar-right" id="right-menu">
+				<!-- Different links --> 
+				<li>
+					{% url 'home' as home_url %}
+					<a href="{{ home_url }}" class="navelement {% if request.get_full_path == home_url %}bold{% endif %}">Home</a>	
+				</li>
+
+				<li>
+					{% url 'apply' as apply_path %}
+					<a href="{{ apply_path }}" class="navelement {% if request.get_full_path == apply_path %}bold{% endif %}">Recruitment</a>
+				</li>
+
+				<li>
+					{% url 'learn' as learn_path %}
+					<a href="{{ learn_path }}" class="navelement {% if request.get_full_path == learn_path %}bold{% endif %}">Training</a>
+				</li>
+
+				<li> 
+					{% url 'team' as team_path %}
+					<a href="{{ team_path }}" class="navelement {% if request.get_full_path == team_path %}bold{% endif %}">Team</a> 
+				</li> 
+				
+				<li><a href="/application"><div class="button nav-button text-center">Apply</div></a></li>
+			</ul>
+		</div>
+	</div>
+</nav> 
+

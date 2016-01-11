@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+import views 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls, name='admin'),
+    url(r'^home/', views.home, name='home'), 
+    url(r'^about_us/', views.about_us, name='about_us'), 
+    url(r'^contact_us/', views.contact_us, name='contact_us'), 
+    url(r'^apply/', views.apply, name='apply'), 
+    url(r'^learn/', views.learn, name='learn'),
+    url(r'^legal/', views.legal, name='legal'), 
+    url(r'^sponsors/', views.sponsors, name='sponsors'),
+    url(r'^team/', views.team, name='team'), 
+    url(r'^projects/', views.projects, name='projects')
 ]
