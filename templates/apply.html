@@ -1,6 +1,161 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block include_css %}
+<link rel="stylesheet" href="{% static 'css/static_pages/apply.css' %}?{% now 'U' %}"/>
+{% endblock %}
+
 {% block content %}
-<h1>#Apply</h1> 
+<div class="recruitment">
+	<p class="text-white text-top text-large">
+		A new breed of project team
+	</p>
+	<p class="text-white text-bottom">
+		Join a team of the best designers and developers on campus
+	</p>
+</div>
+
+<div class="white-barz">
+	<div class="slogan modified-slogan">
+		Get startup experience
+	</div>
+	<p class="text-black text-paragraph">
+
+		Cornell App Development (CUAppDev) is unlike any other project team on campus.  Our designers and developers get first-hand experience building projects from the ground up.  From the initial idea, all the way through the final release, our members are involved in the entire production stack.  After a semester on our team, you'll be able to fit right into a professional development studio.  
+	</p>
+</div>
+
+<div class="offwhite-barz">
+	<div class="slogan modified-slogan">
+		Expand your network
+	</div>
+	<p class="text-black text-paragraph">
+		Learn to effectively work in a diverse team with a wide	range of skillsets and perspectives.  Our members come from many corners of campus and we actively look to recruit creative people who think differently.  
+	</p>
+</div>
+
+<div class="white-barz">
+	<div class="slogan modified-slogan">
+		Build your portfolio
+	</div>
+	<p class="text-black text-paragraph">
+		When you join our team, you're guaranteed to add a fully-featured, polish app to your portfolio every year.  Additionally, the apps you help create will be published to the App Store.  
+	</p>
+
+</div>
+
+
+<!-- All image sizes are hard-coded in --> 
+<div class="black-barz">
+	<div class="text-large text-white" style="margin-bottom: 20px;">
+		For designers 
+	</div>
+	<div class="container">
+		<div class="col-sm-4">
+			<div class="col-xs-12" style="padding-bottom: 40px;">
+				<img src="{% static 'images/recruitment/Pixel.png' %}" class="center-block" style="width:181px;height:auto;"/>
+			</div>
+			<p class="text-small col-xs-12 text-center bullet" style="color: white;">
+				Design pixel perfect graphics and intuitive user experiences for high-utility apps. 
+			</p>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+				<img src="{% static 'images/recruitment/sketch.png' %}" class="center-block" style="width:90px;height:auto;"/>
+			</div>
+			<p class="text-small col-xs-12 text-center bullet" style="color: white;">
+				Learn to maximize your efficiency using industry standard design tools.  
+			</p>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+				<img src="{% static 'images/recruitment/Blueprint.png' %}" class="center-block" style="width:73px;height:auto;"/>
+			</div>
+			<p class="text-small col-xs-12 text-center" style="color: white;">
+				See your work come to life with an entire team of developers implementing your hard-thought designs.   
+			</p>
+		</div>
+
+
+	</div>
+
+</div>
+
+
+
+<div class="darkgray-barz">
+	<div class="text-large text-white">
+		For developers 
+	</div>
+	<div class="container">
+		<div class="col-sm-4">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+				<img src="{% static 'images/recruitment/Git.png' %}" class="center-block" style="width:73px;height:auto;"/>
+			</div>
+			<p class="text-small col-xs-12 text-center bullet" style="color: white;">
+				All our code is open-sourced on <a href="https://github.com/cuappdev" class="red-link">Github</a> so you can show off your work to the world.  
+			</p>
+
+		</div>
+
+		<div class="col-sm-4">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+				<img src="{% static 'images/recruitment/Team.png' %}" class="center-block" style="width:120px;height:auto;"/>
+			</div>
+			<p class="text-small col-xs-12 text-center bullet" style="color: white;">
+				Work with a great team and learn advanced development techniques.  
+			</p>
+
+		</div>
+
+		<div class="col-sm-4">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+				<img src="{% static 'images/recruitment/Prototype.png' %}" class="center-block" style="width:73px;height:auto;"/>
+			</div>
+			<p class="text-small col-xs-12 text-center" style="color: white;">
+				Turn your prototypes into visually stunning apps with an entire design team behind you.  
+			</p>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<div class="white-barz">
+
+	<div class="slogan modified-slogan" style="padding-bottom: 10px;">
+		Requirements 
+	</div>
+
+	<p class="text-black text-paragraph">
+		You must be an undergraduate enrolled at Cornell University.</br></br>  
+	</p>
+
+	<p class="text-black text-paragraph">
+		Developers and designers must have access to a Mac running OS X Yosemite or later (free update from the App Store) because most of our tools are only available on Macs.</br></br>
+	</p>
+
+	<p class="text-black text-paragraph">
+		Designers should also have an iPhone, or have extensively used an iPhone running iOS 7 or later. 
+	</p>
+
+	<!--
+	
+	<div style="padding-top:40px;padding-bottom:40px;">
+		<a href="#">
+			<div class="button-bottom text-center col-xs-offset-4 col-xs-4">
+				Apply
+			</div>
+		</a>
+	</div>
+
+	--> 
+
+</div>
+
+
 {% endblock %}

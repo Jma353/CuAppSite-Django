@@ -9,7 +9,7 @@ $red-hover: #E30000;
 
 /* Deals with link bolding */
 .bold {
-	font-weight: strong; 
+	font-weight: bold; 
 }
 
 /* For the image of the clocktower */ 
@@ -91,15 +91,6 @@ $red-hover: #E30000;
 	padding-bottom: 75px;
 	padding-left: 20px;
 	padding-right: 20px;
-}
-
-/* Tsvi and Karim portion of the page */ 
-.tsvi-karim { 
-	background: url('../images/karim-tsvi.png') no-repeat center center; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
 }
 
 

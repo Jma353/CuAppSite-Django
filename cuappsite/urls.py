@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^legal/', views.legal, name='legal'), 
     url(r'^sponsors/', views.sponsors, name='sponsors'),
     url(r'^team/', views.team, name='team'), 
-    url(r'^projects/', views.projects, name='projects')
+    url(r'^projects/', views.projects, name='projects'),
+
 ]

@@ -1,0 +1,8 @@
+/* Tsvi and Karim portion of the page */ 
+.tsvi-karim { 
+  background: url('../../images/karim-tsvi.png') no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
