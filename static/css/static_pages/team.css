@@ -1,0 +1,22 @@
+.team-top {
+	background: url('../../images/TopTeam.png') no-repeat center center;
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.app-dev-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50px;
+ }
+
+.social-media { 
+	align-content: center;
+}
+
+.team-member {
+	margin-bottom: 40px;
+}

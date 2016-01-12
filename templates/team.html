@@ -1,6 +1,253 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block include_css %}
+<link rel="stylesheet" href="{% static 'css/static_pages/team.css' %}?{% now 'U' %}" />
+{% endblock %}
+
 {% block content %}
-<h1>#Team</h1> 
+
+<div class="team-top">
+	<img src="{% static 'images/AppDevLogo.png' %}" class="app-dev-logo" />
+	<div class="slogan text-center">Our Team</div>
+</div>
+
+
+<!-- Modifying to add team information --> 
+<div class="white-barz">
+	<div class="container team-container">
+
+		<!-- ERIC --> 
+		<div class="col-sm-4 team-member">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+				<img src="{% static 'images/team/Eric.png' %}" class="center-block" style="width:150px;height:auto;" />
+			</div>
+			<p class="text-medium col-xs-12 text-center" style="margin-bottom:0px;">
+				Eric Appel  
+			</p>
+			<p class="text-small col-xs-12 text-center">
+				President  
+			</p>
+
+			<div class="col-xs-12 bullet">
+
+				<div class="col-xs-offset-3 col-xs-2">
+					<a><img src="{% static 'images/team/github.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/linkedin.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/web.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+				 
+			</div>
+
+
+		</div>
+
+		<!-- LUCAS --> 
+		<div class="col-sm-4 team-member">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+			<img src="{% static 'images/team/Lucas.png' %}" class="center-block" style="width:150px;height:auto;" />
+			</div>
+			<p class="text-medium col-xs-12 text-center" style="margin-bottom:0px;">
+				Lucas Derraugh
+			</p>
+			<p class="text-small col-xs-12 text-center">
+				VP of Development 
+			</p>
+
+
+			<div class="col-xs-12 bullet">
+
+				<div class="col-xs-offset-3 col-xs-2">
+					<a><img src="{% static 'images/team/github.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/linkedin.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/web.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+				 
+			</div>
+
+		</div>
+
+
+		<!-- STEVEN --> 
+		<div class="col-sm-4 team-member">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+			<img src="{% static 'images/team/Steven.png' %}" class="center-block" style="width:150px;height:auto;" />
+			</div>
+			<p class="text-medium col-xs-12 text-center" style="margin-bottom:0px;">
+				Steven Yeh   
+			</p>
+			<p class="text-small col-xs-12 text-center">
+				VP of Operations
+			</p>
+
+			<div class="col-xs-12">
+				<div class="col-xs-offset-4 col-xs-2">
+					<a><img src="{% static 'images/team/github.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/linkedin.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+		<div class="container team-container">
+
+		<!-- TSVI --> 	
+		<div class="col-sm-4 team-member">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+			<img src="{% static 'images/team/Tsvi.png' %}" class="center-block" style="width:150px;height:auto;" />
+			</div>
+			<p class="text-medium col-xs-12 text-center" style="margin-bottom:0px;">
+				Tsvi Tannin 
+			</p>
+			<p class="text-small col-xs-12 text-center">
+				VP of Product  
+			</p>
+			<div class="col-xs-12 bullet">
+
+				<div class="col-xs-offset-3 col-xs-2">
+					<a><img src="{% static 'images/team/github.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/linkedin.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/web.png' %}" class="center-block" style="width:20px;height:auto;"/></a>
+				</div>
+				 
+			</div>
+		</div>
+
+		<!-- FEIFAN --> 
+		<div class="col-sm-4 team-member">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+			<img src="{% static 'images/team/Feifan.png' %}" class="center-block" style="width:150px;height:auto;" />
+			</div>
+			<p class="text-medium col-xs-12 text-center" style="margin-bottom:0px;">
+				Feifan Zhou 
+			</p>
+			<p class="text-small col-xs-12 text-center">
+				VP of Web Technologies  
+			</p>
+
+			<div class="col-xs-12 bullet">
+				
+				<div class="col-xs-offset-2 col-xs-2">
+					<a><img src="{% static 'images/team/twitter.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/github.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/linkedin.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/web.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+
+			</div>
+		</div>
+
+		<!-- ALEX --> 
+		<div class="col-sm-4 team-member">
+			<div class="col-xs-12" style="padding-bottom: 20px;">
+			<img src="{% static 'images/team/Alex.png' %}" class="center-block" style="width:150px;height:auto;" />
+			</div>
+			<p class="text-medium col-xs-12 text-center" style="margin-bottom:0px;">
+				Alex Zielenski 
+			</p>
+			<p class="text-small col-xs-12 text-center">
+				Senior Developer Liaison 
+			</p>
+
+			<div class="col-xs-12 social-media">
+				
+				<div class="col-xs-offset-2 col-xs-2">
+					<a><img src="{% static 'images/team/twitter.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/github.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/linkedin.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+
+				<div class="col-xs-2">
+					<a><img src="{% static 'images/team/web.png' %}" class="center-block" style="width:20px;height:auto;"/></a> 
+				</div>
+				 
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+
+<div class="offwhite-barz">
+
+	<div class="container">
+		<div class="col-sm-6 text-center">
+			<div class="slogan" style="padding-top:0px;">
+				Designers
+			</div>
+			<p class="text-black text-small">
+				Andrew Aquino</br>
+				Adam Elshaer</br>
+				Manuela Rios</br>
+				Jesse Chen</br>
+				Derrick Ho</br>
+			</p>
+		</div>
+
+		<div class="col-sm-6 text-center">
+			<div class="slogan" style="padding-top:0px;">
+				Developers
+			</div>
+			<p class="text-black text-small">
+				Ilan Filonenko</br>
+				Annie Cheng</br>
+				Dennis Fedorko</br>
+				Mark Bryan</br>
+				Joseph Antonakakis</br>
+				Austin Chan</br>
+				Natasha Armbrust</br>
+				Pine Wu</br>
+				Eileen Dai</br>
+
+			</p>
+		</div>
+
+	</div>
+
+
+</div>
+
+
+
 {% endblock %}
