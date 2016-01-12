@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block include_css %}
+<link rel='stylesheet' href="{% static 'css/static_pages/contact.css' %}?{% now 'U' %}"/>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="contact-top">
+	<p class="text text-white">
+		For general questions, feedback, or business inquiries</br>
+		INFO@CUAPPDEV.ORG
+	</p> 
+
+</div>
+
+{% endblock %}
