@@ -20,7 +20,6 @@ import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
-    url(r'^home/', views.home, name='home'), 
     url(r'^about_us/', views.about_us, name='about_us'), 
     url(r'^contact_us/', views.contact_us, name='contact_us'), 
     url(r'^apply/', views.apply, name='apply'), 
@@ -29,5 +28,5 @@ urlpatterns = [
     url(r'^sponsors/', views.sponsors, name='sponsors'),
     url(r'^team/', views.team, name='team'), 
     url(r'^projects/', views.projects, name='projects'),
-
+    url(r'^$', views.home, name='home'), 
 ]

@@ -4,26 +4,44 @@
 	<div class="container">
 		<!-- Top bar --> 
 		<div class="row">
-			<a class="col-xs-6 col-md-offset-2 col-md-2 text-center footer-nav" href="/">Home</a>
-			<a class="col-xs-6 col-md-2 text-center footer-nav" href="/apply">Recruitment</a>
-			<a class="col-xs-6 col-md-2 text-center footer-nav" href="/learn">Training</a>
-			<a class="col-xs-6 col-md-2 text-center footer-nav" href="application">Apply</a> 
+			{% url 'home' as home_url %}
+			<a class="col-xs-6 col-md-offset-2 col-md-2 text-center footer-nav
+			{% if request.get_full_path == home_url %}bold{% endif %}" href="/">Home</a>
+			{% url 'apply' as apply_url %}
+			<a class="col-xs-6 col-md-2 text-center footer-nav
+			{% if request.get_full_path == apply_url %}bold{% endif %}" href="{{ apply_url }}">Recruitment</a>
+			{% url 'learn' as learn_url %}
+			<a class="col-xs-6 col-md-2 text-center footer-nav
+			{% if request.get_full_path == learn_url %}bold{% endif %}" href="{{ learn_url }}">Training</a>
+			{% url 'application' as application_url %}
+			<a class="col-xs-6 col-md-2 text-center footer-nav
+			{% if request.get_full_path == application_url %}bold{% endif %}" href="{{ application_url }}">Apply</a> 
 		</div> 
 
 		<div class="container col-xs-12 col-md-7">
 
 			<!-- first column row --> 
 			<div class="row">
-				<a href="{% url 'projects' %}" class="col-xs-offset-3 col-xs-2 col-md-3 footer-column">Projects</a>
-				<a href="{% url 'legal' %}" class="col-xs-2 col-md-3 footer-column">Legal</a> 
-				<a href="{% url 'sponsors' %}" class="col-xs-2 col-md-3 footer-column">Sponsors</a> 
+				{% url 'projects' as projects_url %}
+				<a href="{{ projects_url }}" class="col-xs-offset-3 col-xs-2 col-md-3 footer-column
+				{% if request.get_full_path == projects_url %}bold{% endif %}">Projects</a>
+				{% url 'legal' as legal_url %}
+				<a href="{{ legal_url }}" class="col-xs-2 col-md-3 footer-column
+				{% if request.get_full_path == legal_url %}bold{% endif %}">Legal</a> 
+				{% url 'sponsors' as sponsors_url %}
+				<a href="{{ sponsors_url }}" class="col-xs-2 col-md-3 footer-column
+				{% if request.get_full_path == sponsors_url %}bold{% endif %}">Sponsors</a> 
 			</div> 
 
 			<!-- second column row --> 
 			<div class="row">
-				<a href="{% url 'team' %}" class="col-xs-offset-3 col-xs-2 col-md-3 footer-column">Team</a> 
+				{% url 'team' as team_url %}
+				<a href="{{ team_url }}" class="col-xs-offset-3 col-xs-2 col-md-3 footer-column
+				{% if request.get_full_path == team_url %}bold{% endif %}">Team</a> 
 				<a href="https://www.linkedin.com/company/cornell-app-development-cuappdev-" class="col-xs-2 col-md-3 footer-column">LinkedIn</a>
-				<a href="{% url 'contact_us' %}" class="col-xs-2 col-md-3 footer-column" >Contact Us</a>
+				{% url 'contact_us' as contact_us_url %}
+				<a href="{{ contact_us_url }}" class="col-xs-2 col-md-3 footer-column
+				{% if request.get_full_path == contact_us_url %}bold{% endif %}" >Contact Us</a>
 			</div> 
 
 			<!-- third column row --> 
