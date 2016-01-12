@@ -1,6 +1,50 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block include_css %}
+	<link rel="stylesheet" href="{% static 'css/static_pages/sponsors.css' %}?{% now 'U' %}"/>
+{% endblock %}
+
 {% block content %}
-<h1>#Sponsors</h1> 
+
+
+<div class="sponsor">
+	<p class="text text-white text-large">
+		Become a Sponsor 
+	</p>
+</div> 
+
+<div class="offwhite-barz">
+	<div class="slogan modified-slogan">
+		Send message to our listserv
+	</div>
+	<p class="text-black text-paragraph">
+		This is gonna be so dope when we can have people sponsor us ! 
+	</p>
+
+	<div class="slogan modified-slogan">
+		Tech talks 
+	</div>
+	<p class="text-black text-paragraph">
+		This is gonna be so dope when we can have people sponsor us ! 
+	</p>
+
+	<div class="slogan modified-slogan">
+		Software sponsorship 
+	</div>
+	<p class="text-black text-paragraph">
+		This is gonna be so dope when we can have people sponsor us ! 
+	</p>
+
+	<div class="slogan modified-slogan">
+		Monetary donation  
+	</div>
+	<p class="text-black text-paragraph">
+		This is gonna be so dope when we can have people sponsor us ! 
+	</p>
+
+
+</div>
+
+
 {% endblock %}
