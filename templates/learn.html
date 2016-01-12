@@ -1,6 +1,80 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block include_css %}
+<link rel="stylesheet" href="{% static 'css/static_pages/learn.css' %}?{% now 'U' %}"/>
+{% endblock %}
+
 {% block content %}
-<h1>#Learn</h1> 
+
+
+
+<div class="glowinggrass">
+	<p class="text text-white text-large">
+		Our Training Program
+	</p>
+</div>
+
+
+<div class="white-barz">
+	<div class="text-center slogan why">Why should you join our training program?</div>
+</div>
+
+
+<div class="offwhite-barz">
+	<div class="slogan modified-slogan">
+		Open to anyone 
+	</div>
+	<p class="text-black text-paragraph">
+		Students from any college or major are encouraged to apply.  You <strong>do not</strong> need to be an engineer or a CS major to succeed in this program or join our team.  
+	</p>
+</div>
+
+
+<div class="white-barz">
+	<div class="slogan modified-slogan">
+		What we'll cover 
+	</div>
+	<p class="text-black text-paragraph">We'll start with the basics and follow a logical progression to more advanced concepts.  By the end of the course, you will know enough to be a Junior Developer on our team."
+	</p> 
+</div> 
+
+
+<div class="offwhite-barz">
+	<div class="slogan modified-slogan">
+		Requirements 
+	</div>
+	<p class="text-black text-paragraph">
+		From week one, the program will assume no prior knowledge of iOS development or even computer science.  However, in the interest of time, we will not be spending much time on low level programming concepts.  For this reason, we insist that applicants have previously taken or be concurrently taking CS 1110 or equivalent.  
+	</p>
+</div> 
+
+
+<div class="white-barz">
+	<div class="slogan modified-slogan">
+		FAQ
+	</div>
+	<p class="text-black text-paragraph">
+		<strong>How long and frequent are lectures?</strong></br>
+		Lectures will be 1 hour in length and will be once per week.  Additionally, a homework project will be assigned weekly and will be due the night before the following week's session. 
+	</br> 
+	</br> 
+		<strong>Can I take this program for credit?</strong></br>
+		Accepted trainees will recieve 1 course credit for completing the program.  It will be a S/U credit.  
+	</br> 
+	</br>
+		<strong>Do I have to be a certain year or in a certain school to apply?</strong></br>
+		There is no major or year requirement to apply.  Freshman through Seniors enrolled in any school are welcome. 
+	</br> 
+	</br>
+		<strong>Is there a training program for designers?</strong></br>
+		There is no training program for a beginning designers due to the abstract nature of design as opposed to that of development.  The unfortunate reality is that it is a lot harder to teach design in a rigid program.  If you are a designer with digital experience and want to improve your skills, we encourage you to <a href="{% url 'apply' %}" class="red-link">apply to be a Junior Designer on our team.</a>
+	</p>
+
+
+</div> 
+
+
+
+
 {% endblock %}
