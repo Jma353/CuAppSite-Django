@@ -6,3 +6,17 @@
   -o-background-size: cover;
   background-size: cover;
 }
+
+.email-form {
+	margin-bottom: 30px; 
+	margin-right: 10%;
+	margin-left: 10%;
+	width: 80%; 
+}
+
+.email-form input {
+	background-color: white !important; 
+	padding-left: 5px !important; 
+	padding-right: 5px !important; 
+	border-radius: 5px;
+}
