@@ -22,6 +22,8 @@
     "paper-less": "*",
     "animo.js": "*", 
     "underscore": "*",
-    "jquery.scrollTo": "*"
+    "jquery.scrollTo": "*",
+    "js-cookie": "*", 
+    "typed.js": "*"
   }
 }

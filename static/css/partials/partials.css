@@ -7,7 +7,7 @@ html {
 /* NAVBAR STUFF */
  
 body {
-	margin-top: 90px;
+	margin-top: 70px;
 }
 
 #right-menu {
@@ -145,5 +145,20 @@ body {
 /* Class to add to form element when there's an error */ 
 .form_error { 
   border: 1px solid red; 
+}
+
+
+@media screen and (max-width: 768px) {
+
+  .footer-column {
+    font-size: 11px;
+  }
+
+}
+
+
+.FooterEmailResult {
+  padding-top: 10px;
+  clear: left;
 }
 

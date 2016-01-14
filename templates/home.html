@@ -13,10 +13,9 @@
 	<img src="{% static 'images/clocktower.png' %}?{% now 'U' %}" class="imagez" />
 </div>
 
-
 <div class="white-barz" style="padding-top:20px;padding-bottom:20px;">
 	<div class="text-center slogan">We make apps</div>
-</div>  
+</div> 
 
 <div class="black-barz">
 	<p class="text-white">Cornell App Development is a project team at Cornell University dedicated 
@@ -72,10 +71,40 @@
 
 
 <div class="gray-barz">
-	<h1 class="text-large text-white light-face">Join our mailing list</h1>
-	<div class="row"></div> 
+	<div class="enter-email">
+		<h1 class="text-large text-white light-face">Join our mailing list</h1>
+		<h4 class="text-small text-white light-face">Please enter in your Cornell Email</h4> 
+		
+		<form class="email-form" method="POST" action="">
+
+			{% for field in form %}
+				<div class="form-group">
+					<input type="email" 
+						name="{{ field.name }}"
+						id="id_{{ field.name }}"
+						value=""
+						placeholder="e.g. foo1@cornell.edu"
+						class="form-control email-input" />
+				</div>
+
+			{% endfor %}
+
+			<input type="submit" value="submit" class="btn btn-primary col-xs-1" class="email-form-submit" />
+
+		</form>
+	</div> 
+
+	<h4 class="text-medium text-white light-face EmailResult"></h4>
 
 </div>
 
+
+{% endblock %}
+
+
+
+{% block include_js %}
+<script src="{% static 'bower_components/typed.js/js/typed.js' %}?{% now 'U' %}"></script> 
+<script src="{% static 'js/home.js' %}?{% now 'U' %}"></script> 
 
 {% endblock %}

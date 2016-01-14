@@ -20,13 +20,13 @@ import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
-    url(r'^about_us/', views.about_us, name='about_us'), 
-    url(r'^contact_us/', views.contact_us, name='contact_us'), 
-    url(r'^apply/', views.apply, name='apply'), 
-    url(r'^learn/', views.learn, name='learn'),
-    url(r'^legal/', views.legal, name='legal'), 
-    url(r'^sponsors/', views.sponsors, name='sponsors'),
-    url(r'^team/', views.team, name='team'), 
-    url(r'^projects/', views.projects, name='projects'),
-    url(r'^$', views.home, name='home'), 
+    url(r'^about_us/', views.AboutUs.as_view(), name='about_us'), 
+    url(r'^contact_us/', views.ContactUs.as_view(), name='contact_us'), 
+    url(r'^apply/', views.Apply.as_view(), name='apply'), 
+    url(r'^learn/', views.Learn.as_view(), name='learn'),
+    url(r'^legal/', views.Legal.as_view(), name='legal'), 
+    url(r'^sponsors/', views.Sponsors.as_view(), name='sponsors'),
+    url(r'^team/', views.Team.as_view(), name='team'), 
+    url(r'^projects/', views.Projects.as_view(), name='projects'),
+    url(r'^$', views.Home.as_view(), name='home'), 
 ]

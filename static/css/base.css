@@ -264,8 +264,17 @@ $red-hover: #E30000;
 
 
 
+.footer-form input {
+	background-color: white !important; 
+	padding-left: 5px !important; 
+	padding-right: 5px !important; 
+	border-radius: 5px !important;
+}
 
-
+.footer-form {
+	padding-top: 0px;
+	margin-top: 0px;
+}
 
 
 
