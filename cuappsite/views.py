@@ -109,12 +109,32 @@ class TrainingProgram(FormView):
 		return HttpResponse(template.render(context, request))
 
 
+
+
+
 class CoreTeam(FormView):
 
 	def get(self, request):
 		template = loader.get_template('core-team.html')
 		context = { 'request': request, 'form': EmailForm, 'email_form': EmailForm } # Will change 
 		return HttpResponse(template.render(context, request))
+
+	
+
+		# In this view, we need to create a user from the user fields that are filled, create a 
+		# candidate object associated with the user, generate a random value for checking 
+		# the basic information of that user via the admin panel, etc. 
+
+
+		# All values not featured in the form must be instantied properly 
+
+
+		# As a default, we must also create a trainee object with filled in information, b/c all
+		# people not accepted onto the full team are automatically referred to the training program 
+
+
+
+
 
 
 

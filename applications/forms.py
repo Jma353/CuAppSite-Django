@@ -38,8 +38,6 @@ class EmailForm(forms.ModelForm):
 		self.cleaned_data['last_name'] = last_name
 	
 
-
-
 	class Meta:
 
 		model = AppDevUser
@@ -49,6 +47,13 @@ class EmailForm(forms.ModelForm):
 
 
 
+class UserForm(forms.ModelForm):
+	""" General form for user information """ 
+
+
+	class Meta: 
+		model = AppDevUser
+		fields = ['email']
 
 
 

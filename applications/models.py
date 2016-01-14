@@ -33,8 +33,28 @@ class Idea(models.Model):
 															 max_length=255)
 
 
+# To add the access_code to the create method 
+class ApplicantManager(models.Manager): 
+	def create(self, **kwargs): 
+		access_code = generate_random_key(64)
+		return super(ApplicantManager, self).create(access_code=access_code, *args, **kwargs)
+
+
+
+
+# Trainee 
+# DB Schema information
+# role: 							string, `DES` or `DEV`, indicating the role of the applicant 
+# essay: 							string, can be blank, <= 300 words w/custom validator 
+# access_code: 				random 64 character string, SET IN THE FORM 
+# score: 							integer, 0-10, can be null/blank, used to rank core-team apps 
+# status: 						string, can be null/blank, max 255 chars, used to keep notes on core-team app/interview 
 
 class Candidate(models.Model):
+	# For access_code generation 
+	objects = ApplicantManager() 
+
+
 	# Possible roles, plus tuple w/tuples for options 
 	DESIGNER = "DES"
 	DEVELOPER = "DEV"
@@ -44,14 +64,14 @@ class Candidate(models.Model):
 	)
 
 	# Role
-	role = models.CharField(max_length=3,
+	role = models.CharField(max_length=20,
 													choices=ROLES, 
 													default=DEVELOPER,
 													verbose_name="Role")
 
 	# Essay (300 words or less)
-	essay = models.CharField(null=True, 
-													 blank=True, 
+	essay = models.CharField(blank=True,
+													 default="", 
 													 verbose_name="Candidate Essay",
 													 validators=[validate_essay_length],
 													 max_length=100000)
@@ -61,11 +81,6 @@ class Candidate(models.Model):
 																 blank=True, 
 																 verbose_name="Rand64 Access Code",
 																 max_length=64)
-
-	# Score validators 
-	min_score_validator = MinValueValidator(0, message="The score can't be lower than 0")
-	max_score_validator = MaxValueValidator(10, message="The score can't be higher than 10")
-
 
 	# Score to rate applicants to the core team (0-10)
 	score = models.IntegerField(null=True, 
@@ -84,23 +99,32 @@ class Candidate(models.Model):
 
 
 
+# Trainee 
+# DB Schema information
+# essay: 							string, can be blank, <= 300 words w/custom validator 
+# access_code: 				random 64 character string, SET IN THE FORM 
+# score: 							integer, 0-10, can be null/blank, used to rank trainee apps 
+# status: 						string, can be null/blank, max 255 chars, used to keep notes on trainee app 
+
 class Trainee(models.Model): 
+	# For access_code generation  
+	objects = ApplicantManager() 
 
 	# Essay (300 words or less)
-	essay = models.CharField(null=True,
-													 blank=True, 
+	essay = models.CharField(blank=True, 
+													 default="",
 													 verbose_name="Trainee Essay",
 													 validators=[validate_essay_length],
 													 max_length=100000)
 
 	# Access Code (to view via URL); set in the form 
-	access_code = models.CharField(null=False,
+	access_code = models.CharField(null=True, # So it can be validated via the form properly 
 																 blank=True, 
 																 verbose_name="Rand64 Access Code",
 																 max_length=64)
 
 	# Score to rate training program applicants (0-10)
-	scores = models.IntegerField(null=True,
+	score = models.IntegerField(null=True,
 															 blank=True, 
 															 verbose_name="Preference Score",
 															 validators=[min_score_validator, max_score_validator])
@@ -114,6 +138,20 @@ class Trainee(models.Model):
 
 
 
+# AppDevUser 
+
+# DB Schema information
+# first_name: 				string, can't be null, max 40 chars 
+# last_name: 					string, can't be null, max 60 chars 
+# email: 							email, regex validator, unique, max 25 chars 
+# on_email_list: 			boolean, default False 
+# year: 							integer, can be null, >=2016, <=2019
+# major: 							string, can be null, max 60 chars 
+# highest_cs_course: 	integer, can be null, <=7000, >=1000
+# ideas: 							many-to-many relationship 
+# candidate: 					foreign-key relationship 
+# trainee: 						foreign-key relationship 
+# portfolio_link: 		string, can't be blank, max 200 chars 
 
 
 # Primary model created when someone signs up for the email list, 
@@ -145,7 +183,7 @@ class AppDevUser(models.Model):
 														verbose_name="Email") # Email validator will be run to validate this field 
 
 	# On email list or not 
-	on_email_list = models.BooleanField(verbose_name="On Email List?") 
+	on_email_list = models.BooleanField(verbose_name="On Email List?", default=False) 
 
 
 	# Year validators 
@@ -197,8 +235,8 @@ class AppDevUser(models.Model):
 
 
 	# Portfolio link (for Github, design portfolio, personal website, etc.)
-	portfolio_link = models.CharField(null=True, 
-																 		blank=True,
+	portfolio_link = models.CharField(blank=False,
+																		default="", 
 																 		max_length=200,
 																 		verbose_name="Portfolio Link")
 
