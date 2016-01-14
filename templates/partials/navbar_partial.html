@@ -38,7 +38,7 @@
 				
 				{% url 'application' as application_path %}
 				<li><a href="{{ application_path }}"><div class="button nav-button text-center
-				{% if request.get_full_path == application_path %}bold{% endif %}">Apply</div></a></li>
+				{% if 'application' in request.get_full_path %}bold{% endif %}">Apply</div></a></li>
 
 			</ul>
 		</div>

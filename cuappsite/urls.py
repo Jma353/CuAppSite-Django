@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^sponsors/', views.Sponsors.as_view(), name='sponsors'),
     url(r'^team/', views.Team.as_view(), name='team'), 
     url(r'^projects/', views.Projects.as_view(), name='projects'),
+    url(r'^application/training-program', views.TrainingProgram.as_view(), name='training-program-application'),
+    url(r'^application/core-team', views.CoreTeam.as_view(), name='core-team-application'),
     url(r'^application/', views.Application.as_view(), name='application'),
     url(r'^$', views.Home.as_view(), name='home'), 
 ]

@@ -101,4 +101,22 @@ class Application(BaseStaticView):
 		return HttpResponse(template.render(context, request))
 
 
-		
+class TrainingProgram(FormView):
+
+	def get(self, request):
+		template = loader.get_template('training-program.html')
+		context = { 'request': request, 'form': EmailForm, 'email_form': EmailForm } # Will change 
+		return HttpResponse(template.render(context, request))
+
+
+class CoreTeam(FormView):
+
+	def get(self, request):
+		template = loader.get_template('core-team.html')
+		context = { 'request': request, 'form': EmailForm, 'email_form': EmailForm } # Will change 
+		return HttpResponse(template.render(context, request))
+
+
+
+
+

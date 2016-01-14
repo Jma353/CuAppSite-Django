@@ -15,7 +15,7 @@
 			{% if request.get_full_path == learn_url %}bold{% endif %}" href="{{ learn_url }}">Training</a>
 			{% url 'application' as application_url %}
 			<a class="col-xs-6 col-md-2 text-center footer-nav
-			{% if request.get_full_path == application_url %}bold{% endif %}" href="{{ application_url }}">Apply</a> 
+			{% if 'application' in request.get_full_path %}bold{% endif %}" href="{{ application_url }}">Apply</a> 
 		</div> 
 
 		<div class="container col-xs-12 col-md-7">
