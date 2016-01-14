@@ -36,7 +36,10 @@
 					<a href="{{ team_path }}" class="navelement {% if request.get_full_path == team_path %}bold{% endif %}">Team</a> 
 				</li> 
 				
-				<li><a href="/application"><div class="button nav-button text-center">Apply</div></a></li>
+				{% url 'application' as application_path %}
+				<li><a href="{{ application_path }}"><div class="button nav-button text-center
+				{% if request.get_full_path == application_path %}bold{% endif %}">Apply</div></a></li>
+
 			</ul>
 		</div>
 	</div>

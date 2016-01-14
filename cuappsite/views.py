@@ -93,3 +93,12 @@ class Projects(BaseStaticView):
 		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
 		return HttpResponse(template.render(context, request))
 
+
+class Application(BaseStaticView): 
+	def get(self, request): 
+		template = loader.get_template('application.html')
+		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
+		return HttpResponse(template.render(context, request))
+
+
+		
