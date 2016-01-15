@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	Core Team App 
+{% endblock %}
+
+
+{% block include_css %}
+<link rel="stylesheet" href="{% static 'css/static_pages/core-team.css' %}?{% now 'U' %}"/> 
+{% endblock %}
+
+{% block content %}
+
+<div class="core-team">
+	<p class="text text-large text-black core-text-top">Join Our Core Team</p>
+</div>
+
+<div class="white-barz">
+
+
+
+<div >
+
+	<form class="form-horizontal core-team-form" method="POST" action="{% url 'core-team-application' %}">
+
+		{% csrf_token %}
+		{% for field in user_form %}
+
+			<div class="form-group">
+				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+				<input type="{{ field.help_text }}" 
+					class="form-control" 
+					name="user-{{ field.name }}"
+					id="id_user-{{ field.name }}"
+					placeholder="{{ field.field.widget.attrs.placeholder }}"> 
+			</div> 
+			<!-- Need the user- to be a properly prefixed --> 
+
+		{% endfor %}
+		{{ candidate_form.as_p }}
+
+		<input type="submit" value="Submit" class="btn btn-primary"/>
+
+	</form> 
+
+
+</div> 
+
+</div>
+
+{% endblock %}
+
+{% block include_js %}
+<script src="{% static 'js/core-team.js' %}?{% now 'U' %}"></script> 
+{% endblock %}
+

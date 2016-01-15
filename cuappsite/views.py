@@ -2,10 +2,13 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect 
 from django.template import loader 
 from django.views.generic.edit import FormView # Generic view used for generating forms
-from applications.forms import EmailForm
+from applications.forms import EmailForm, UserForm, CandidateForm
+from applications.models import AppDevUser
 
 # Each static page has a email submission on it somewhere 
 # In BaseStaticView, define functionality to handle this email submission
+
+# NOTE: ALL POST REQUESTS FOR THE FOOTER EMAIL FORM ARE MADE TO "/"
 
 class BaseStaticView(FormView): 
 	form_class = EmailForm
@@ -95,17 +98,24 @@ class Projects(BaseStaticView):
 
 
 class Application(BaseStaticView): 
+
 	def get(self, request): 
 		template = loader.get_template('application.html')
 		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
 		return HttpResponse(template.render(context, request))
 
 
+
+# Essentially, combines several forms, and responds to post requests made to 
+# THIS URL SPECIFICALLY 
 class TrainingProgram(FormView):
+
+	user_form = UserForm 
+	email_form = EmailForm
 
 	def get(self, request):
 		template = loader.get_template('training-program.html')
-		context = { 'request': request, 'form': EmailForm, 'email_form': EmailForm } # Will change 
+		context = { 'request': request, 'user_form': self.user_form, 'email_form': self.email_form } # Will change 
 		return HttpResponse(template.render(context, request))
 
 
@@ -114,12 +124,23 @@ class TrainingProgram(FormView):
 
 class CoreTeam(FormView):
 
+	user_form = UserForm(prefix="user")
+	email_form = EmailForm(prefix="email")
+	candidate_form = CandidateForm(prefix="candidate")
+
+	partially_saved_user = None 
+
 	def get(self, request):
 		template = loader.get_template('core-team.html')
-		context = { 'request': request, 'form': EmailForm, 'email_form': EmailForm } # Will change 
+		context = { 'request': request, 
+								'user_form': self.user_form, 
+								'email_form': self.email_form, 
+								'candidate_form': self.candidate_form
+							} 
+							
 		return HttpResponse(template.render(context, request))
 
-	
+
 
 		# In this view, we need to create a user from the user fields that are filled, create a 
 		# candidate object associated with the user, generate a random value for checking 

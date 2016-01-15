@@ -1,0 +1,26 @@
+.core-team {
+	background: url('../../images/core_team.jpg') no-repeat center center; 
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+.core-text-top {
+	padding-top: 60px !important; 
+}
+
+
+@media screen and (max-width: 768px) {
+
+	.core-text-top {
+		padding-top: 25px !important; 
+	}
+
+}
+
+.core-team-form {
+	margin-left: 20% !important;
+	margin-right: 20% !important;
+}

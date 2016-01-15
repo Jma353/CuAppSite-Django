@@ -24,6 +24,11 @@ def validate_essay_length(essay):
 min_score_validator = MinValueValidator(0, message="The score can't be lower than 0")
 max_score_validator = MaxValueValidator(10, message="The score can't be higher than 10")
 
+# Highest course validators 
+max_course_validator = MaxValueValidator(7000, message="The course number you entered is too high")
+min_course_validator = MinValueValidator(1000, message="The course number you entered is too low")
+
+
 
 
 # Idea model, associated with users (a user can have many ideas)
@@ -46,6 +51,8 @@ class ApplicantManager(models.Manager):
 # DB Schema information
 # role: 							string, `DES` or `DEV`, indicating the role of the applicant 
 # essay: 							string, can be blank, <= 300 words w/custom validator 
+# portfolio_link: 		string, can be blank, max 200 chars 
+# resume_link: 				string, can be blank, max 200 chars
 # access_code: 				random 64 character string, SET IN THE FORM 
 # score: 							integer, 0-10, can be null/blank, used to rank core-team apps 
 # status: 						string, can be null/blank, max 255 chars, used to keep notes on core-team app/interview 
@@ -69,12 +76,28 @@ class Candidate(models.Model):
 													default=DEVELOPER,
 													verbose_name="Role")
 
+
 	# Essay (300 words or less)
 	essay = models.CharField(blank=True,
 													 default="", 
 													 verbose_name="Candidate Essay",
 													 validators=[validate_essay_length],
 													 max_length=100000)
+
+
+	# Portfolio link (for Github, design portfolio, personal website, etc.)
+	portfolio_link = models.CharField(blank=False,
+																		default="", 
+																 		max_length=200,
+																 		verbose_name="Portfolio Link")
+
+
+	# Link to resume (via Dropbox or Google Docs or something)
+	resume_link = models.CharField(null=True, 
+																 blank=True,
+																 max_length=200,
+																 verbose_name="Resume Link")
+
 
 	# Access Code (to view via URL); set in the form 
 	access_code = models.CharField(null=False,
@@ -87,6 +110,7 @@ class Candidate(models.Model):
 															blank=True, 
 															verbose_name="Preference Score",
 															validators=[min_score_validator, max_score_validator])
+
 
 	# Status, where notes can be made about the applicant 
 	# based on interview performance, application submission strength, 
@@ -101,14 +125,25 @@ class Candidate(models.Model):
 
 # Trainee 
 # DB Schema information
+
+# highest_cs_course: 	integer, can be null, <=7000, >=1000
 # essay: 							string, can be blank, <= 300 words w/custom validator 
+# portfolio_link: 		string, can be blank, max 200 chars 
+# resume_link: 				string, can be blank, max 200 chars
 # access_code: 				random 64 character string, SET IN THE FORM 
 # score: 							integer, 0-10, can be null/blank, used to rank trainee apps 
 # status: 						string, can be null/blank, max 255 chars, used to keep notes on trainee app 
 
+
 class Trainee(models.Model): 
 	# For access_code generation  
 	objects = ApplicantManager() 
+
+	# Highest CS Course 
+	highest_cs_course = models.IntegerField(verbose_name="Highest CS Course",
+																					null=True,
+																					validators=[max_course_validator, min_course_validator])
+
 
 	# Essay (300 words or less)
 	essay = models.CharField(blank=True, 
@@ -116,6 +151,19 @@ class Trainee(models.Model):
 													 verbose_name="Trainee Essay",
 													 validators=[validate_essay_length],
 													 max_length=100000)
+
+
+	# Portfolio link (for Github, design portfolio, personal website, etc.)
+	portfolio_link = models.CharField(blank=True,
+																		default="", 
+																 		max_length=200,
+																 		verbose_name="Portfolio Link")
+
+
+	# Link to resume (via Dropbox or Google Docs or something)
+	resume_link = models.CharField(blank=True,
+																 max_length=200,
+																 verbose_name="Resume Link")
 
 	# Access Code (to view via URL); set in the form 
 	access_code = models.CharField(null=True, # So it can be validated via the form properly 
@@ -143,15 +191,15 @@ class Trainee(models.Model):
 # DB Schema information
 # first_name: 				string, can't be null, max 40 chars 
 # last_name: 					string, can't be null, max 60 chars 
-# email: 							email, regex validator, unique, max 25 chars 
+# email: 							email, regex validator, max 25 chars * 
 # on_email_list: 			boolean, default False 
 # year: 							integer, can be null, >=2016, <=2019
 # major: 							string, can be null, max 60 chars 
-# highest_cs_course: 	integer, can be null, <=7000, >=1000
 # ideas: 							many-to-many relationship 
 # candidate: 					foreign-key relationship 
 # trainee: 						foreign-key relationship 
-# portfolio_link: 		string, can't be blank, max 200 chars 
+
+# * the email should be unique, but this is handled via all forms 
 
 
 # Primary model created when someone signs up for the email list, 
@@ -178,7 +226,6 @@ class AppDevUser(models.Model):
 	# Email 
 	email = models.EmailField(null=False,
 														max_length=25,
-														unique=True,
 														validators=[email_validator], 
 														verbose_name="Email") # Email validator will be run to validate this field 
 
@@ -201,15 +248,7 @@ class AppDevUser(models.Model):
 	major = models.CharField(max_length=60, null=True)
 
 
-	# Highest course validators 
-	max_course_validator = MaxValueValidator(7000, message="The course number you entered is too high")
-	min_course_validator = MinValueValidator(1000, message="The course number you entered is too low")
 
-
-	# Highest CS Course 
-	highest_cs_course = models.IntegerField(verbose_name="Highest CS Course",
-																					null=True,
-																					validators=[max_course_validator, min_course_validator])
 
 
 	# Ideas are a separate model 
@@ -225,20 +264,6 @@ class AppDevUser(models.Model):
 	# Trainee foreign key
 	trainee = models.ForeignKey(Trainee, on_delete=models.CASCADE)
 
-
-
-	# Link to resume (via Dropbox or Google Docs or something)
-	resume_link = models.CharField(null=True, 
-																 blank=True,
-																 max_length=200,
-																 verbose_name="Resume Link")
-
-
-	# Portfolio link (for Github, design portfolio, personal website, etc.)
-	portfolio_link = models.CharField(blank=False,
-																		default="", 
-																 		max_length=200,
-																 		verbose_name="Portfolio Link")
 
 
 

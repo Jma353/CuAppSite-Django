@@ -1,20 +1,18 @@
 from django import forms 
 from applications.models import Candidate, Trainee, AppDevUser 
+from django.core.exceptions import ObjectDoesNotExist 
 import helpers # Helper functions
-
 
 
 
 class EmailForm(forms.ModelForm): 	
 	""" Form used for adding users to the email list on the home page and on the footer """
 
-	# This type of validation only performed on first name b/c 
-	# last_name will be `None` if first_name is `None` 
-	def clean_first_name(self):
-		# How one would typically get this data
-		email = self.cleaned_data['email']
-
-		first_name = helpers.get_first_name(email)
+	def clean_email(self):
+		cleaned_data = self.cleaned_data 
+		try: AppDevUser.objects.get(email=cleaned_data['email'])
+		except ObjectDoesNotExist: 
+			 raise forms.ValidationError("This email already exists in our database.")
 
 	# NOT CALLED ON FIELD, CALLED ON THE FORM 
 	# Attempts to populate first_name and last_name fields via web-scraping 
@@ -36,6 +34,8 @@ class EmailForm(forms.ModelForm):
 
 		self.cleaned_data['first_name'] = first_name
 		self.cleaned_data['last_name'] = last_name
+
+
 	
 
 	class Meta:
@@ -50,16 +50,39 @@ class EmailForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
 	""" General form for user information """ 
 
-
 	class Meta: 
 		model = AppDevUser
-		fields = ['email']
+		fields = ['first_name', 'last_name', 'email', 'year', 'major']
 
+		# Using this to indicate what type of input I want 
+		help_texts = {
+			'first_name': 'text',
+			'last_name': 'text',
+			'email': 'email',
+			'year': 'number',
+			'major': 'text',
+		}
 
+		widgets = {
+			'first_name': forms.TextInput(attrs={ 'placeholder': 'John' }),
+			'last_name': forms.TextInput(attrs={ 'placeholder': 'Doe' }),
+			'email': forms.TextInput(attrs={ 'placeholder': 'jd222@cornell.edu' }),
+			'year': forms.NumberInput(attrs={ 'placeholder': 2019 }),
+			'major': forms.TextInput(attrs={ 'placeholder': "Computer Science" }),
+		}
 
+class CandidateForm(forms.ModelForm):
 
+	""" Form for Core Team Candidate """
 
+	class Meta: 
+		model = Candidate
 
+		fields = ['role', 'essay', 'portfolio_link', 'resume_link']
+
+		help_texts = {}
+
+		widgets = {}
 
 
 

@@ -1,0 +1,7 @@
+.training-program {
+	background: url('../../images/training_program.jpg') no-repeat center center; 
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
