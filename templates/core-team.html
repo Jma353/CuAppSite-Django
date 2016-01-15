@@ -18,9 +18,11 @@
 
 <div class="white-barz">
 
+<div class="slogan modified-slogan" style="margin-left:20%;">
+	Tell us about yourself
+</div>
 
-
-<div >
+<div>
 
 	<form class="form-horizontal core-team-form" method="POST" action="{% url 'core-team-application' %}">
 
@@ -29,16 +31,22 @@
 
 			<div class="form-group">
 				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-				<input type="{{ field.help_text }}" 
-					class="form-control" 
-					name="user-{{ field.name }}"
-					id="id_user-{{ field.name }}"
-					placeholder="{{ field.field.widget.attrs.placeholder }}"> 
+				{{ field }} 
 			</div> 
-			<!-- Need the user- to be a properly prefixed --> 
+			<!-- Above is properly prefixed --> 
 
 		{% endfor %}
-		{{ candidate_form.as_p }}
+		{% for field in candidate_form %}
+			<div class="form-group">
+				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+				{{ field }}
+				{% if field.name == 'essay' %}
+					<div class="row">
+						<div class="word-count">300</div>
+					</div>
+				{% endif %}
+			</div>
+		{% endfor %}
 
 		<input type="submit" value="Submit" class="btn btn-primary"/>
 

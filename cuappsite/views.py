@@ -124,8 +124,13 @@ class TrainingProgram(FormView):
 
 class CoreTeam(FormView):
 
+	
+	email_form = EmailForm()
+
+	# Sets up appropriate forms w/proper prefixes for the purposes of validating 
+	# two forms on a single post request... one for the user, one for the candidate 
+	# associated with the user 
 	user_form = UserForm(prefix="user")
-	email_form = EmailForm(prefix="email")
 	candidate_form = CandidateForm(prefix="candidate")
 
 	partially_saved_user = None 
@@ -137,8 +142,18 @@ class CoreTeam(FormView):
 								'email_form': self.email_form, 
 								'candidate_form': self.candidate_form
 							} 
-							
+
 		return HttpResponse(template.render(context, request))
+
+
+	def post(self, request):
+
+		# Submitted forms w/appropriate data 
+		submitted_user_form = UserForm(request.POST, prefix="user")
+		submitted_candidate_form = CandidateForm(request.POST, prefix="candidate")
+
+		if submitted_user_form.valid(): 
+			print "Hello world!"
 
 
 

@@ -24,3 +24,11 @@
 	margin-left: 20% !important;
 	margin-right: 20% !important;
 }
+
+.essay {
+	resize: vertical;
+}
+
+.word-count {
+	text-align: right;
+}

@@ -249,8 +249,6 @@ class AppDevUser(models.Model):
 
 
 
-
-
 	# Ideas are a separate model 
 	ideas = models.ManyToManyField(Idea)
 

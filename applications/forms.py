@@ -11,7 +11,8 @@ class EmailForm(forms.ModelForm):
 	def clean_email(self):
 		cleaned_data = self.cleaned_data 
 		try:
-			AppDevUser.objects.get(email=cleaned_data['email'])
+			AppDevUser.objects.get(email=cleaned_data['email']) 
+			# IF ABOVE IS SUCCESSFUL, THEN ALREADY ON EMAIL LIST 
 			raise forms.ValidationError("This email already exists in our database.")
 		except ObjectDoesNotExist: 
 			return self.cleaned_data['email']
@@ -66,11 +67,11 @@ class UserForm(forms.ModelForm):
 		}
 
 		widgets = {
-			'first_name': forms.TextInput(attrs={ 'placeholder': 'John' }),
-			'last_name': forms.TextInput(attrs={ 'placeholder': 'Doe' }),
-			'email': forms.TextInput(attrs={ 'placeholder': 'jd222@cornell.edu' }),
-			'year': forms.NumberInput(attrs={ 'placeholder': 2019 }),
-			'major': forms.TextInput(attrs={ 'placeholder': "Computer Science" }),
+			'first_name': forms.TextInput(attrs={ 'placeholder': 'John', 'class': 'form-control' }),
+			'last_name': forms.TextInput(attrs={ 'placeholder': 'Doe', 'class': 'form-control' }),
+			'email': forms.EmailInput(attrs={ 'placeholder': 'jd222@cornell.edu', 'class': 'form-control' }),
+			'year': forms.NumberInput(attrs={ 'placeholder': 2019, 'class': 'form-control' }),
+			'major': forms.TextInput(attrs={ 'placeholder': 'Computer Science', 'class': 'form-control' }),
 		}
 
 class CandidateForm(forms.ModelForm):
@@ -84,7 +85,15 @@ class CandidateForm(forms.ModelForm):
 
 		help_texts = {}
 
-		widgets = {}
+		widgets = {
+			'role': forms.Select(attrs={  'class': 'form-control' }),
+			'essay': forms.Textarea(attrs={ 'placeholder': 'Things to include: Highest CS course (for devs), relevant experience, reason(s) for wanting to join the team, and why you\'d rock as member of CU App Dev!',
+																		  'class': 'form-control essay', 'rows': 10 }),
+			'portfolio_link': forms.TextInput(attrs={ 'placeholder': 'Github (for devs), Dropbox link, a personal site, etc.', 
+																								'class': 'form-control' }),
+			'resume_link': forms.TextInput(attrs={ 'placeholder': 'Resume via Google Drive, Dropbox, etc.', 
+																						 'class': 'form-control' }),
+		}
 
 
 
