@@ -10,9 +10,11 @@ class EmailForm(forms.ModelForm):
 
 	def clean_email(self):
 		cleaned_data = self.cleaned_data 
-		try: AppDevUser.objects.get(email=cleaned_data['email'])
+		try:
+			AppDevUser.objects.get(email=cleaned_data['email'])
+			raise forms.ValidationError("This email already exists in our database.")
 		except ObjectDoesNotExist: 
-			 raise forms.ValidationError("This email already exists in our database.")
+			return self.cleaned_data['email']
 
 	# NOT CALLED ON FIELD, CALLED ON THE FORM 
 	# Attempts to populate first_name and last_name fields via web-scraping 
