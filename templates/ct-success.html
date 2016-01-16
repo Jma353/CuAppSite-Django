@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Core Team App Success 
+{% endblock %}
+
+{% block include_css %}
+	<link rel="stylesheet" href="{% static 'css/static_pages/ct-success.css'%}?{% now 'U' %}"/>
+{% endblock %}
+
+{% block content %}
+	<div class="white-barz">
+		<div class="slogan">Thanks for applying to our Core Team!</div> 
+	</div> 
+{% endblock %}
+
+{% block include_js %}{% endblock %}

@@ -78,7 +78,7 @@ class Candidate(models.Model):
 
 
 	# Essay (300 words or less)
-	essay = models.CharField(blank=True,
+	essay = models.CharField(blank=False,
 													 default="", 
 													 verbose_name="Candidate Essay",
 													 validators=[validate_essay_length],
@@ -94,7 +94,7 @@ class Candidate(models.Model):
 
 	# Link to resume (via Dropbox or Google Docs or something)
 	resume_link = models.CharField(null=True, 
-																 blank=True,
+																 blank=False,
 																 max_length=200,
 																 verbose_name="Resume Link")
 
@@ -146,7 +146,7 @@ class Trainee(models.Model):
 
 
 	# Essay (300 words or less)
-	essay = models.CharField(blank=True, 
+	essay = models.CharField(blank=False, 
 													 default="",
 													 verbose_name="Trainee Essay",
 													 validators=[validate_essay_length],
@@ -154,16 +154,18 @@ class Trainee(models.Model):
 
 
 	# Portfolio link (for Github, design portfolio, personal website, etc.)
-	portfolio_link = models.CharField(blank=True,
+	portfolio_link = models.CharField(blank=False,
 																		default="", 
 																 		max_length=200,
 																 		verbose_name="Portfolio Link")
 
 
 	# Link to resume (via Dropbox or Google Docs or something)
-	resume_link = models.CharField(blank=True,
+	resume_link = models.CharField(null=True, 
+																 blank=False,
 																 max_length=200,
 																 verbose_name="Resume Link")
+
 
 	# Access Code (to view via URL); set in the form 
 	access_code = models.CharField(null=True, # So it can be validated via the form properly 
@@ -193,6 +195,8 @@ class Trainee(models.Model):
 # last_name: 					string, can't be null, max 60 chars 
 # email: 							email, regex validator, max 25 chars * 
 # on_email_list: 			boolean, default False 
+# submitted_tp:				boolean, default False (a.k.a. submitted training program app)
+# submitted_ct: 			boolean, default False (a.k.a. submitted core team app)
 # year: 							integer, can be null, >=2016, <=2019
 # major: 							string, can be null, max 60 chars 
 # ideas: 							many-to-many relationship 
@@ -231,6 +235,12 @@ class AppDevUser(models.Model):
 
 	# On email list or not 
 	on_email_list = models.BooleanField(verbose_name="On Email List?", default=False) 
+
+	# Submitted training program app? 
+	submitted_tp = models.BooleanField(verbose_name="Submitted Training Program App?", default=False)
+
+	# Submitted core team app? 
+	submitted_ct = models.BooleanField(verbose_name="Submitted Core Team App?", default=False)
 
 
 	# Year validators 

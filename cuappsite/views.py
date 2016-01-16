@@ -1,6 +1,7 @@
 from django.shortcuts import render 
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect 
 from django.template import loader 
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic.edit import FormView # Generic view used for generating forms
 from applications.forms import EmailForm, UserForm, CandidateForm
 from applications.models import AppDevUser
@@ -105,6 +106,21 @@ class Application(BaseStaticView):
 		return HttpResponse(template.render(context, request))
 
 
+class TPSuccess(BaseStaticView): 
+
+	def get(self, request):
+		template = loader.get_template('tp-success.html')
+		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
+		return HttpResponse(template.render(context, request))
+
+
+class CTSuccess(BaseStaticView):
+
+	def get(self, request): 
+		template = loader.get_template('ct-success.html')
+		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
+		return HttpResponse(template.render(context, request))
+
 
 # Essentially, combines several forms, and responds to post requests made to 
 # THIS URL SPECIFICALLY 
@@ -124,7 +140,6 @@ class TrainingProgram(FormView):
 
 class CoreTeam(FormView):
 
-	
 	email_form = EmailForm()
 
 	# Sets up appropriate forms w/proper prefixes for the purposes of validating 
@@ -138,22 +153,35 @@ class CoreTeam(FormView):
 	def get(self, request):
 		template = loader.get_template('core-team.html')
 		context = { 'request': request, 
-								'user_form': self.user_form, 
 								'email_form': self.email_form, 
+								'user_form': self.user_form, 
 								'candidate_form': self.candidate_form
 							} 
 
 		return HttpResponse(template.render(context, request))
 
 
-	def post(self, request):
 
+	def post(self, request):
+		print request.POST
 		# Submitted forms w/appropriate data 
 		submitted_user_form = UserForm(request.POST, prefix="user")
 		submitted_candidate_form = CandidateForm(request.POST, prefix="candidate")
 
-		if submitted_user_form.valid(): 
-			print "Hello world!"
+		if all([submitted_user_form.is_valid(), submitted_candidate_form.is_valid()]): 
+			u = submitted_user_form.save(); # Save the user 
+			u.on_email_list = True # Set email list to true 
+
+
+			return HttpResponseRedirect(reverse('core-team-success'))
+
+		else: 
+			return render(request, 'core-team.html', {
+				'request': request,
+				'email_form': self.email_form,
+				'user_form': submitted_user_form,
+				'candidate_form': submitted_candidate_form
+			}); 
 
 
 

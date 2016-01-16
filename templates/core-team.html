@@ -29,22 +29,29 @@
 		{% csrf_token %}
 		{% for field in user_form %}
 
-			<div class="form-group">
+			<div class="form-group {{ field.name }}-group {% if field.errors %}has-error{% endif %}">
 				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-				{{ field }} 
+				{{ field }}
+				<div class="error-message">
+					{{ field.errors }}
+				</div>  
 			</div> 
 			<!-- Above is properly prefixed --> 
 
 		{% endfor %}
 		{% for field in candidate_form %}
-			<div class="form-group">
+			<div class="form-group {{ field.name }}-group {% if field.errors %}has-error{% endif %}">
 				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
 				{{ field }}
+				<!-- If it's the essay, it needs a word restriction --> 
 				{% if field.name == 'essay' %}
 					<div class="row">
 						<div class="word-count">300</div>
 					</div>
 				{% endif %}
+				<div class="error-message">
+					{{ field.errors }}
+				</div> 
 			</div>
 		{% endfor %}
 

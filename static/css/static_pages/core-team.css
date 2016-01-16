@@ -32,3 +32,7 @@
 .word-count {
 	text-align: right;
 }
+
+.error-message {
+	color: #E81717; 
+}

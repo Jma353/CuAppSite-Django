@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Training Program App Success 
+{% endblock %}
+
+{% block include_css %}
+	<link rel="stylesheet" href="{% static 'css/static_pages/tp-success.css'%}?{% now 'U' %}"/>
+{% endblock %}
+
+{% block content %}
+	<div class="white-barz">
+		<div class="slogan">Thanks for applying to our Training Program!</div> 
+	</div> 
+{% endblock %}
+
+{% block include_js %}{% endblock %}
