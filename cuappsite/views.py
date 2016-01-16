@@ -134,12 +134,17 @@ class CTSuccess(BaseStaticView):
 # THIS URL SPECIFICALLY 
 class TrainingProgram(FormView):
 
-	user_form = UserForm 
+	user_form = UserForm(prefix="user")
+	 
 	email_form = EmailForm
+
 
 	def get(self, request):
 		template = loader.get_template('training-program.html')
-		context = { 'request': request, 'user_form': self.user_form, 'email_form': self.email_form } # Will change 
+		context = { 'request': request, 
+								'user_form': self.user_form, 
+								'email_form': self.email_form 
+							} 
 		return HttpResponse(template.render(context, request))
 
 

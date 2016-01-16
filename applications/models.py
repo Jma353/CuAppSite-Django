@@ -127,9 +127,9 @@ class Candidate(models.Model):
 # DB Schema information
 
 # highest_cs_course: 	integer, can be null, <=7000, >=1000
-# essay: 							string, can be blank, <= 300 words w/custom validator 
-# portfolio_link: 		string, can be blank, max 200 chars 
-# resume_link: 				string, can be blank, max 200 chars
+# essay: 							string, can't be blank, <= 300 words w/custom validator 
+# portfolio_link: 		string, can't be blank, max 200 chars 
+# resume_link: 				string, can't be blank, max 200 chars
 # access_code: 				random 64 character string, SET IN THE FORM 
 # score: 							integer, 0-10, can be null/blank, used to rank trainee apps 
 # status: 						string, can be null/blank, max 255 chars, used to keep notes on trainee app 

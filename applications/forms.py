@@ -96,6 +96,25 @@ class CandidateForm(forms.ModelForm):
 		}
 
 
+class TraineeForm(forms.ModelForm):
+	""" Form for Training Program Applicants """
+
+	class Meta: 
+
+		fields = ['highest_cs_course', 'essay', 'portfolio_link', 'resume_link']
+
+		help_texts = {}
+
+		widgets = {
+			'highest_cs_course': forms.NumberInput(attrs={ 'placeholder': 1110, 'class': 'form-control'}),
+			'essay': forms.Textarea(attrs={ 'placeholder': 'Things to include: Why you are interested in learning iOS programming, ' + 
+																									 'what experience you have with iOS app development/programming in general, and why you think you our Training Program will benefit you.', 
+																			'class': 'form-control essay', 'rows': 10 }),
+			'portfolio_link': forms.TextInput(attrs={ 'placeholder': 'Github, Dropbox link, a personal site, etc.', 
+																								'class': 'form-control' }),
+			'resume_link': forms.TextInput(attrs={ 'placeholder': 'Resume via Google Drive, Dropbox, etc.', 
+																						 'class': 'form-control' }),
+		}
 
 # Need an email form
 
