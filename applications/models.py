@@ -265,14 +265,17 @@ class AppDevUser(models.Model):
 
 
 	# Candidate foreign key
-	candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+	candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, null=True)
 
 
 
 	# Trainee foreign key
-	trainee = models.ForeignKey(Trainee, on_delete=models.CASCADE)
+	trainee = models.ForeignKey(Trainee, on_delete=models.CASCADE, null=True)
 
 
+	# String representation 
+	def __str__(self): 
+		return self.first_name + " " + self.last_name + " | " + self.email
 
 
 

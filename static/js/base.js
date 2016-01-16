@@ -44,7 +44,11 @@ $(document).ready(function() {
 				} else {
 					console.log("This was not successful"); 
 					var resultText = $('.FooterEmailResult'); // Result div 
-					resultText.text(json['failure']); // Extract success message 
+					console.log(json);
+					var newJSON = $.parseJSON(json); 
+					console.log(newJSON); 
+					console.log(newJSON['email'][0]['message']); 
+					resultText.text(newJSON['email'][0]['message']); // Extract success message 
 					resultText.animo( { animation: "fadeInDown", duration: 0.75 }); 
 				}
 				

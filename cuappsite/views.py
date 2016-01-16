@@ -1,8 +1,12 @@
+import random
+import string
 from django.shortcuts import render 
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect 
 from django.template import loader 
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic.edit import FormView # Generic view used for generating forms
+from django.contrib import messages 
+from django.core.exceptions import ObjectDoesNotExist 
 from applications.forms import EmailForm, UserForm, CandidateForm
 from applications.models import AppDevUser
 
@@ -10,6 +14,12 @@ from applications.models import AppDevUser
 # In BaseStaticView, define functionality to handle this email submission
 
 # NOTE: ALL POST REQUESTS FOR THE FOOTER EMAIL FORM ARE MADE TO "/"
+
+
+# For the access code of Candidate and Trainee 
+def generate_random_key(length):
+    return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(length))
+
 
 class BaseStaticView(FormView): 
 	form_class = EmailForm
@@ -19,15 +29,13 @@ class BaseStaticView(FormView):
 		print request.POST # POST request 
 		form = EmailForm(request.POST) # Populate the email form with the values submitted 
 		if form.is_valid(): 
-			print form.cleaned_data.get('email')
-			print form.cleaned_data.get('first_name')
-			print form.cleaned_data.get('last_name')
-			return JsonResponse({ "success": "Thanks for your email! We'll keep you in the loop!" })
+				u = form.save(commit=False)
+				u.on_email_list = True
+				u.save()
+				return JsonResponse({ "success": "Thanks for your email! We'll keep you in the loop!" })
 		else: 
-			for x in form.errors.keys(): 
-				print form.errors[x].as_text
-
-			return JsonResponse({ "failure": "One or more errors occurred.  Please re-enter your email."})
+			print form.errors.as_json
+			return JsonResponse(form.errors.as_json(escape_html=True), safe=False)
 
 
 class Home(BaseStaticView): 
@@ -161,7 +169,7 @@ class CoreTeam(FormView):
 		return HttpResponse(template.render(context, request))
 
 
-
+	# This contains a lot of repeated code, possibly refactor given time constraints  
 	def post(self, request):
 		print request.POST
 		# Submitted forms w/appropriate data 
@@ -169,11 +177,38 @@ class CoreTeam(FormView):
 		submitted_candidate_form = CandidateForm(request.POST, prefix="candidate")
 
 		if all([submitted_user_form.is_valid(), submitted_candidate_form.is_valid()]): 
-			u = submitted_user_form.save(); # Save the user 
-			u.on_email_list = True # Set email list to true 
+			u_cleaned_data = submitted_user_form.cleaned_data
+			c_cleaned_data = submitted_candidate_form.cleaned_data
+			user_email = u_cleaned_data['email']
 
-
-			return HttpResponseRedirect(reverse('core-team-success'))
+			try: 
+				u = AppDevUser.objects.get(email=user_email)
+				if u.submitted_ct: # Already submitted core-team application
+					messages.info(request, "You already submitted a Core Team app.")
+					return HttpResponseRedirect(reverse('core-team-success'))
+				else: # This email exists, but a ct-app has not been submitted 
+					u.delete() # Delete old user instance 
+					u = submitted_user_form.save(commit=False)
+					u.on_email_list = True 
+					u.submitted_ct = True 
+					c = submitted_candidate_form.save(commit=False)
+					c.access_code = generate_random_key(64)
+					c.save() 
+					u.candidate = c
+					u.save() 
+					messages.info(request, "Thank you for applying to our Core Team!")
+					return HttpResponseRedirect(reverse('core-team-success'))
+			except ObjectDoesNotExist as e: # No user exists with that email 
+				u = submitted_user_form.save(commit=False) # Save the user
+				u.on_email_list = True 
+				u.submitted_ct = True 
+				c = submitted_candidate_form.save(commit=False)
+				c.access_code = generate_random_key(64)
+				c.save() 
+				u.candidate = c
+				u.save() 
+				messages.info(request, "Thank you for applying to our Core Team!")
+				return HttpResponseRedirect(reverse('core-team-success'))	
 
 		else: 
 			return render(request, 'core-team.html', {
@@ -182,6 +217,7 @@ class CoreTeam(FormView):
 				'user_form': submitted_user_form,
 				'candidate_form': submitted_candidate_form
 			}); 
+
 
 
 
