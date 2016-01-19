@@ -24,6 +24,10 @@
 	<form class="form-horizontal training-program-form">
 		{% csrf_token %}
 		{% for field in user_form %}
+			<div class="form-group {{ field.name }}-group {% if field.errors %} has-error {% endif %}">
+				<label class="control-label" for id_"{{ field.name }}">{{ field.label }}</label> 
+				{{ field }}
+			</div>
 		{% endfor %}
 		{% for field in trainee_form %}
 		{% endfor %}

@@ -11,7 +11,13 @@ Training Program App Success
 
 {% block content %}
 	<div class="white-barz">
-		<div class="slogan">Thanks for applying to our Training Program!</div> 
+		<div class="slogan">
+			{% if messages %}
+				{% for message in messages %}
+					{{ message }}
+				{% endfor %}
+			{% endif %}
+		</div>
 	</div> 
 {% endblock %}
 
