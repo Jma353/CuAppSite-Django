@@ -5,3 +5,16 @@
   -o-background-size: cover;
   background-size: cover;
 }
+
+.training-text-top {
+	padding-top: 60px !important; 
+}
+
+
+@media screen and (max-width: 768px) {
+
+	.training-text-top {
+		padding-top: 25px !important; 
+	}
+
+}

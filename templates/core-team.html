@@ -13,54 +13,54 @@
 {% block content %}
 
 <div class="core-team">
-	<p class="text text-large text-black core-text-top">Join Our Core Team</p>
+	<p class="text text-large text-white core-text-top">Join Our Core Team</p>
 </div>
 
 <div class="white-barz">
 
-<div class="slogan modified-slogan" style="margin-left:20%;">
-	Tell us about yourself
-</div>
+	<div class="slogan modified-slogan" style="margin-left:20%;">
+		Tell us about yourself
+	</div>
 
-<div>
+	<div>
 
-	<form class="form-horizontal core-team-form" method="POST" action="{% url 'core-team-application' %}">
+		<form class="form-horizontal core-team-form" method="POST" action="{% url 'core-team-application' %}">
 
-		{% csrf_token %}
-		{% for field in user_form %}
+			{% csrf_token %}
+			{% for field in user_form %}
 
-			<div class="form-group {{ field.name }}-group {% if field.errors %}has-error{% endif %}">
-				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-				{{ field }}
-				<div class="error-message">
-					{{ field.errors }}
-				</div>  
-			</div> 
-			<!-- Above is properly prefixed --> 
-
-		{% endfor %}
-		{% for field in candidate_form %}
-			<div class="form-group {{ field.name }}-group {% if field.errors %}has-error{% endif %}">
-				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-				{{ field }}
-				<!-- If it's the essay, it needs a word restriction --> 
-				{% if field.name == 'essay' %}
-					<div class="row">
-						<div class="word-count">300</div>
-					</div>
-				{% endif %}
-				<div class="error-message">
-					{{ field.errors }}
+				<div class="form-group {{ field.name }}-group {% if field.errors %}has-error{% endif %}">
+					<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+					{{ field }}
+					<div class="error-message">
+						{{ field.errors }}
+					</div>  
 				</div> 
-			</div>
-		{% endfor %}
+				<!-- Above is properly prefixed --> 
 
-		<input type="submit" value="Submit" class="btn btn-primary"/>
+			{% endfor %}
+			{% for field in candidate_form %}
+				<div class="form-group {{ field.name }}-group {% if field.errors %}has-error{% endif %}">
+					<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+					{{ field }}
+					<!-- If it's the essay, it needs a word restriction --> 
+					{% if field.name == 'essay' %}
+						<div class="row">
+							<div class="word-count">300</div>
+						</div>
+					{% endif %}
+					<div class="error-message">
+						{{ field.errors }}
+					</div> 
+				</div>
+			{% endfor %}
 
-	</form> 
+			<input type="submit" value="Submit" class="btn btn-primary"/>
+
+		</form> 
 
 
-</div> 
+	</div> 
 
 </div>
 

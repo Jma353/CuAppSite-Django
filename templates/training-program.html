@@ -12,6 +12,25 @@
 
 {% block content %}
 
+<div class="training-program">
+	<p class="text text-large text-white training-text-top">Join Our Training Program</p>
+</div> 
+
+<div class="white-barz">
+	<div class="slogan modified-slogan" style="margin-left:20%;">
+		Tell us about yourself
+	</div>
+
+	<form class="form-horizontal training-program-form">
+		{% csrf_token %}
+		{% for field in user_form %}
+		{% endfor %}
+		{% for field in trainee_form %}
+		{% endfor %}
+
+	</form>
+</div>
+
 
 
 

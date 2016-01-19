@@ -4,7 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 import helpers # Helper functions
 
 
-
 class EmailForm(forms.ModelForm): 	
 	""" Form used for adding users to the email list on the home page and on the footer """
 
@@ -53,6 +52,8 @@ class EmailForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
 	""" General form for user information """ 
 
+
+
 	class Meta: 
 		model = AppDevUser
 		fields = ['first_name', 'last_name', 'email', 'year', 'major']
@@ -100,7 +101,7 @@ class TraineeForm(forms.ModelForm):
 	""" Form for Training Program Applicants """
 
 	class Meta: 
-
+		model = Trainee 
 		fields = ['highest_cs_course', 'essay', 'portfolio_link', 'resume_link']
 
 		help_texts = {}
@@ -116,13 +117,7 @@ class TraineeForm(forms.ModelForm):
 																						 'class': 'form-control' }),
 		}
 
-# Need an email form
 
-# Need a candidate form that creates a user and then a candidate from that user 
-
-# Need a training program form that creates a user and then a trainee from that user 
-
-# NEED TO READ UP ON FORM VALIDATIONS AGAIN AND MODEL VALIDATING VIA CLEAN AND SUCH 
 
 
 

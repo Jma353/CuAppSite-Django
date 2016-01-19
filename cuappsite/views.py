@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic.edit import FormView # Generic view used for generating forms
 from django.contrib import messages 
 from django.core.exceptions import ObjectDoesNotExist 
-from applications.forms import EmailForm, UserForm, CandidateForm
+from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm 
 from applications.models import AppDevUser
 
 # Each static page has a email submission on it somewhere 
@@ -130,22 +130,87 @@ class CTSuccess(BaseStaticView):
 		return HttpResponse(template.render(context, request))
 
 
+# To see if a user exists 
+def user_exists(cleaned_data):
+	email = cleaned_data['email']
+	try: 
+		u = AppDevUser.objects.get(email=email)
+		return u 
+	except ObjectDoesNotExist as e: 
+		return None
+
+
+# To save a user with a specific attr as well 
+def save_user_via_form(user_form, attr_form, attr):
+	if attr == "candidate": 
+		submitted = "submitted_ct"
+	elif attr == "trainee": 
+		submitted = "submitted_tp"
+
+	u = user_form.save(commit=False) 
+	u.on_email_list = True
+	setattr(u, submitted, True)
+	attr_obj = attr_form.save(commit=False)
+	attr_obj.access_code = generate_random_key(64)
+	attr_obj.save() 
+	setattr(u, attr, attr_obj)
+	u.save() 
+
+
+
+
 # Essentially, combines several forms, and responds to post requests made to 
 # THIS URL SPECIFICALLY 
 class TrainingProgram(FormView):
 
-	user_form = UserForm(prefix="user")
-	 
-	email_form = EmailForm
+	email_form = EmailForm()
 
+	# Prefixed separate form processing 
+	user_form = UserForm(prefix="user")
+	trainee_form = TraineeForm(prefix="trainee") 
 
 	def get(self, request):
 		template = loader.get_template('training-program.html')
 		context = { 'request': request, 
+								'email_form': self.email_form,
 								'user_form': self.user_form, 
-								'email_form': self.email_form 
+								'trainee_form': self.trainee_form
 							} 
 		return HttpResponse(template.render(context, request))
+
+
+	def post(self, request):
+		print request.POST
+		# Submitted forms w/appropriate data 
+		submitted_user_form = UserForm(request.POST, prefix="user")
+		submitted_trainee_form = TraineeForm(request.POST, prefix="trainee")
+
+		if all([submitted_user_form.is_valid(), submitted_trainee_form.is_valid()]): 
+			u_cleaned_data = submitted_user_form.cleaned_data
+			t_cleaned_data = submitted_trainee_form.cleaned_data
+			u = user_exists(u_cleaned_data)
+			if u != None: 
+				if u.submitted_tp:
+					messages.info(request, "You already submitted a Core Team App.")
+					return HttpResponseRedirect(reverse('core-team-success'))
+				else: 
+					u.delete()
+					save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
+					messages.info(request, "Thank you for applying to our Training Program")
+					return HttpResponseRedirect(reverse('training-program-success'))
+			else: 
+				save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
+				messages.info(request, "Thank you for applying to our Training Program!")
+				return HttpResponseRedirect(reverse('training-program-success'))		
+
+		else: 
+			return render(request, 'training-program.html', {
+				'request': request,
+				'email_form': self.email_form,
+				'user_form': submitted_user_form,
+				'trainee_form': submitted_trainee_form
+			}); 
+
 
 
 
@@ -161,8 +226,6 @@ class CoreTeam(FormView):
 	user_form = UserForm(prefix="user")
 	candidate_form = CandidateForm(prefix="candidate")
 
-	partially_saved_user = None 
-
 	def get(self, request):
 		template = loader.get_template('core-team.html')
 		context = { 'request': request, 
@@ -174,7 +237,6 @@ class CoreTeam(FormView):
 		return HttpResponse(template.render(context, request))
 
 
-	# This contains a lot of repeated code, possibly refactor given time constraints  
 	def post(self, request):
 		print request.POST
 		# Submitted forms w/appropriate data 
@@ -184,36 +246,20 @@ class CoreTeam(FormView):
 		if all([submitted_user_form.is_valid(), submitted_candidate_form.is_valid()]): 
 			u_cleaned_data = submitted_user_form.cleaned_data
 			c_cleaned_data = submitted_candidate_form.cleaned_data
-			user_email = u_cleaned_data['email']
-
-			try: 
-				u = AppDevUser.objects.get(email=user_email)
-				if u.submitted_ct: # Already submitted core-team application
-					messages.info(request, "You already submitted a Core Team app.")
+			u = user_exists(u_cleaned_data)
+			if u != None: 
+				if u.submitted_ct:
+					messages.info(request, "You already submitted a Core Team App.")
 					return HttpResponseRedirect(reverse('core-team-success'))
-				else: # This email exists, but a ct-app has not been submitted 
-					u.delete() # Delete old user instance 
-					u = submitted_user_form.save(commit=False)
-					u.on_email_list = True 
-					u.submitted_ct = True 
-					c = submitted_candidate_form.save(commit=False)
-					c.access_code = generate_random_key(64)
-					c.save() 
-					u.candidate = c
-					u.save() 
+				else: 
+					u.delete()
+					save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
 					messages.info(request, "Thank you for applying to our Core Team!")
 					return HttpResponseRedirect(reverse('core-team-success'))
-			except ObjectDoesNotExist as e: # No user exists with that email 
-				u = submitted_user_form.save(commit=False) # Save the user
-				u.on_email_list = True 
-				u.submitted_ct = True 
-				c = submitted_candidate_form.save(commit=False)
-				c.access_code = generate_random_key(64)
-				c.save() 
-				u.candidate = c
-				u.save() 
+			else: 
+				save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
 				messages.info(request, "Thank you for applying to our Core Team!")
-				return HttpResponseRedirect(reverse('core-team-success'))	
+				return HttpResponseRedirect(reverse('core-team-success'))		
 
 		else: 
 			return render(request, 'core-team.html', {
@@ -223,19 +269,6 @@ class CoreTeam(FormView):
 				'candidate_form': submitted_candidate_form
 			}); 
 
-
-
-
-		# In this view, we need to create a user from the user fields that are filled, create a 
-		# candidate object associated with the user, generate a random value for checking 
-		# the basic information of that user via the admin panel, etc. 
-
-
-		# All values not featured in the form must be instantied properly 
-
-
-		# As a default, we must also create a trainee object with filled in information, b/c all
-		# people not accepted onto the full team are automatically referred to the training program 
 
 
 
