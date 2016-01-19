@@ -273,7 +273,10 @@ class CoreTeam(FormView):
 
 
 
-
+def sandbox(request):
+	template = loader.get_template('sandbox.html')
+	context = { 'request': request }
+	return HttpResponse(template.render(context, request))
 
 
 
