@@ -107,7 +107,7 @@ class TraineeForm(forms.ModelForm):
 		help_texts = {}
 
 		widgets = {
-			'highest_cs_course': forms.NumberInput(attrs={ 'placeholder': 1110, 'class': 'form-control'}),
+			'highest_cs_course': forms.NumberInput(attrs={ 'placeholder': '1110 (or 1000 if you have not taken a CS class at Cornell, just so we know)', 'class': 'form-control'}),
 			'essay': forms.Textarea(attrs={ 'placeholder': 'Things to include: Why you are interested in learning iOS programming, ' + 
 																									 'what experience you have with iOS app development/programming in general, and why you think you our Training Program will benefit you.', 
 																			'class': 'form-control essay', 'rows': 10 }),

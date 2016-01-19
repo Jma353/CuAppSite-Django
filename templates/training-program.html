@@ -21,16 +21,36 @@
 		Tell us about yourself
 	</div>
 
-	<form class="form-horizontal training-program-form">
+	<form class="form-horizontal training-program-form" method="POST" action="{% url 'training-program-application' %}">
 		{% csrf_token %}
 		{% for field in user_form %}
-			<div class="form-group {{ field.name }}-group {% if field.errors %} has-error {% endif %}">
-				<label class="control-label" for id_"{{ field.name }}">{{ field.label }}</label> 
+			<div class="form-group {{ field.name }}-group {% if field.errors %}has-error{% endif %}">
+				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label> 
 				{{ field }}
+				<div class="error-messages">
+					{{ field.errors }}
+				</div> 
 			</div>
 		{% endfor %}
+
+
 		{% for field in trainee_form %}
+			<div class="form-group {{ field.name}}-group {% if field.errors %}has-error{% endif %}">
+				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+				{{ field }}
+				<!-- If it's an essay, it needs a word restriction --> 
+				{% if field.name == "essay" %}
+					<div class="row">
+						<div class="word-count">300</div>
+					</div>
+				{% endif %}
+				<div class="error-message">
+					{{ field.errors }}
+				</div>
+			</div>
 		{% endfor %}
+
+		<input type="submit" value="Submit" class="btn btn-primary"/>
 
 	</form>
 </div>

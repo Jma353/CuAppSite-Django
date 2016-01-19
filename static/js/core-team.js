@@ -1,24 +1,6 @@
 $(document).ready(function() {
 
 
-	// Deals with CSRF resolution on AJAX request 
-	var csrftoken = Cookies.get('csrftoken'); // Received from the CSRF 
-	
-	function csrfSafeMethod(method) {
-  	// these HTTP methods do not require CSRF protection
-  	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-	}
-
-	$.ajaxSetup({
-  	beforeSend: function(xhr, settings) {
-      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-          xhr.setRequestHeader("X-CSRFToken", csrftoken);
-      }
-  	}	
-	});
-
-
-
 	// This handles limiting the response characters of the essay for the 
 	// team application 
 	$('.essay').on('keyup', function(e) {
