@@ -17,6 +17,14 @@
 		padding-top: 25px !important; 
 	}
 
+	input {
+	font-size: 10px !important;
+	}
+
+	textarea {
+		font-size: 10px !important; 
+	}
+
 }
 
 .training-program-form {

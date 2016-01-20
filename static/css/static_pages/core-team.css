@@ -18,6 +18,14 @@
 		padding-top: 25px !important; 
 	}
 
+	input {
+	font-size: 10px !important;
+	}
+
+	textarea {
+		font-size: 10px !important; 
+	}
+
 }
 
 .core-team-form {
@@ -36,3 +44,4 @@
 .error-message {
 	color: #E81717; 
 }
+

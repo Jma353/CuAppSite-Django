@@ -9,7 +9,8 @@
 
 		<link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"> 
 		<link rel="stylesheet" href="{% static 'bower_components/paper-less/css/paper.css' %}?{% now 'U' %}">
-		<link rel="stylesheet" href="{% static 'bower_components/animo.js/animate-animo.min.css' %}?{% now 'U' %}"> 
+		<link rel="stylesheet" href="{% static 'bower_components/animo.js/animate-animo.min.css' %}?{% now 'U' %}">
+		<link rel="stylesheet" href="{% static 'sandbox/sandbox.css' %}?{% now 'U' %}"> 
 		<!-- Deals with viewing on mobile --> 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -24,37 +25,37 @@
 
 	<body>		
 
+		<!-- 2 layouts, switch between them via the sidebar --> 
 
 
+		<div id="wrapper">
 
-		#Sandbox 
+			<!-- Sidebar --> 
+			<div id="sidebar-wrapper">
+				<ul class="sidebar-nav">
+					<li><a href="#">Account</a></li>
+					<li><a href="#">Settings</a></li>
+					<li><a href="#">Log Hours</a></li>
+				</ul> 
+			</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			<!-- Page content --> 
+			<div id="page-content-wrapper">
+				<!-- Container fluid so responsive --> 
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<!-- Button to cause the layouts to change -->
+							<a class="btn btn-lg btn-primary" id="menu-toggle">Toggle Menu</a> 
+							<h1> Sidebar Layout </h1>
+							<p> 
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque efficitur libero at justo consequat viverra eu sit amet enim. Ut dictum nisi non lectus commodo, eu suscipit nisi suscipit. Nam et eros aliquet, tempor urna tempor, volutpat ex. Maecenas pharetra lectus quis imperdiet tempor. Aliquam mattis purus vel lacus pretium, eu bibendum mi tempus. Nulla facilisi. Suspendisse mi ante, scelerisque eget rutrum vitae, malesuada pretium mi. Nulla sollicitudin ex sit amet varius luctus. Mauris lacus nunc, placerat quis commodo et, vehicula sed arcu. Nulla ante lacus, laoreet vitae laoreet non, mattis sed ipsum. Maecenas nec lectus non ante dapibus sagittis. Mauris placerat vestibulum erat consequat vulputate.
+							</p> 
+						</div>
+					</div> 
+				</div> 
+			</div>
+		</div> 
 
 
 		<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}?{% now 'U' %}"></script>
@@ -64,6 +65,19 @@
 		<script src="{% static 'bower_components/react/react.js' %}?{% now 'U' %}"></script> 
 		<script src="{% static 'bower_components/animo.js/animo.min.js' %}?{% now 'U' %}"></script> 
 		<script src="{% static 'bower_components/js-cookie/src/js.cookie.js' %}?{% now 'U' %}"></script>
+		<script src-"{% static 'sandbox/sandbox.js' %}?{% now 'U' %}"></script>
+
+		<!-- Menu toggling script --> 
+
+		<script> 
+			$('#menu-toggle').on('click', function(e) {
+				e.preventDefault(); 
+
+				$('#wrapper').toggleClass('menuDisplayed'); // 
+			}); 
+
+		</script> 
+
 
 
 
