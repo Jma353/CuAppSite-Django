@@ -1,0 +1,20 @@
+{% extends 'admin/admin-base.html' %}
+{% load staticfiles %}
+
+{% block title %}Login{% endblock %}
+
+{% block include_css %}
+<link rel="stylesheet" href="{% static 'css/admin/admin-login.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block content %}
+
+
+
+
+{% endblock %}
+
+{% block include_js %}
+<script src="{% static 'js/admin/admin-login.js' %}?{% now 'U' %}"></script> 
+{% endblock %}
+

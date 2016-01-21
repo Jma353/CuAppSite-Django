@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<!DOCTYPE html> 
+
+<html>
+
+	<head>
+
+		<link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"> 
+		<link rel="stylesheet" href="{% static 'bower_components/paper-less/css/paper.css' %}?{% now 'U' %}">
+		<link rel="stylesheet" href="{% static 'bower_components/animo.js/animate-animo.min.css' %}?{% now 'U' %}"> 
+		<link rel="stylesheet" href="{% static 'css/base.css' %}?{% now 'U' %}">
+		<link rel="stylesheet" href="{% static 'css/admin/admin-base.css' %}?{% now 'U' %}">
+		<!-- Deals with viewing on mobile --> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+		{% block include_css %}{% endblock %}
+		<title>CUAPPDEV ADMIN | {% block title %}{% endblock %}</title> 
+
+	</head>
+
+
+	<body>		
+
+
+		{% block content %}
+		{% endblock %}
+
+
+		<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}?{% now 'U' %}"></script>
+		<script src="{% static 'bower_components/jquery.scrollTo/jquery.scrollTo.min.js' %}?{% now 'U' %}"></script> 
+		<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}?{% now 'U' %}"></script> 
+		<script src="{% static 'bower_components/underscore/underscore-min.js' %}?{% now 'U' %}"></script> 
+		<script src="{% static 'bower_components/react/react.js' %}?{% now 'U' %}"></script> 
+		<script src="{% static 'bower_components/animo.js/animo.min.js' %}?{% now 'U' %}"></script> 
+		<script src="{% static 'bower_components/js-cookie/src/js.cookie.js' %}?{% now 'U' %}"></script>
+		<script src="{% static 'js/admin/admin-base.js' %}?{% now 'U' %}"></script> 
+		{% block include_js %}{% endblock %}
+
+
+
+
+	</body> 
+
+</html> 

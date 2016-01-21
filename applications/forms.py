@@ -1,6 +1,7 @@
 from django import forms 
 from applications.models import Candidate, Trainee, AppDevUser 
 from django.core.exceptions import ObjectDoesNotExist 
+from django.contrib.auth.models import User # For the purposes of logging in the admin 
 import helpers # Helper functions
 
 
@@ -120,4 +121,19 @@ class TraineeForm(forms.ModelForm):
 
 
 
+class AdminForm(forms.ModelForm):
+	""" Form used to log into basic admin portal """
+
+	class Meta: 
+		model = User 
+		fields = ['email', 'password']
+
+		help_texts = {} 
+
+		widgets = {
+			'email': forms.EmailInput(attrs={ 'placeholder': 'jma353@cornell.edu',
+																				'class': 'form-control' }),
+			'password': forms.PasswordInput(attrs = { 'class': 'form-control' })
+
+		}
 

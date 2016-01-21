@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic.edit import FormView # Generic view used for generating forms
 from django.contrib import messages 
 from django.core.exceptions import ObjectDoesNotExist 
-from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm 
+from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, AdminForm 
 from applications.models import AppDevUser
 
 # Each static page has a email submission on it somewhere 
@@ -278,6 +278,15 @@ def sandbox(request):
 	context = { 'request': request }
 	return HttpResponse(template.render(context, request))
 
+
+
+class AdminLogin(FormView):
+	form_class = AdminForm
+
+	def get(self, request):
+		template = loader.get_template('admin/admin-login.html')
+		context = { 'request': request, 'admin_form': self.form_class }
+		return HttpResponse(template.render(context, request))
 
 
 
