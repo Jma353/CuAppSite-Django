@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="row">
-	<h1 class="col-xs-offset-1 col-xs-10">CU App Dev Admin Portal</h1>
+	<h1 class="col-xs-offset-1 col-xs-10 light-face">CU App Dev Admin Portal</h1>
 </div>
 
 <div class="row col-xs-offset-1 col-xs-10 error-messages">
@@ -27,7 +27,7 @@
 		{% csrf_token %}
 		{% for field in admin_form %}	
 			<div class="form-group {{ field.name }}-group {% if field.errors %}has-errors{% endif %}">
-				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+				<label class="control-label light-face" for="id_{{ field.name }}">{{ field.label }}</label>
 				{{ field }}
 				<div class="error-message">
 					{{ field.errors }}
@@ -35,7 +35,7 @@
 			</div>
 		{% endfor %}
 
-		<input type="submit" value="Submit" class="btn btn-primary"/>
+		<input type="submit" value="Submit" class="btn btn-primary light-face"/>
 	</form>
 </div>
 
