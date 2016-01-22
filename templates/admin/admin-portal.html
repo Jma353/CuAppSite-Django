@@ -1,0 +1,20 @@
+{% extends 'admin/admin-base.html' %}
+{% load staticfiles %}
+
+{% block title %}PORTAL{% endblock %}
+
+{% block include_css %}
+<link rel="stylesheet" href="{% static 'css/admin/admin-portal.css' %}?{% now 'U' %}">
+{% endblock %}
+
+
+{% block content %}
+
+Hello world 
+
+
+{% endblock %}
+
+{% block include_js %}
+<script src="{% static 'js/admin/admin-portal.js' %}?{% now 'U' %}"></script> 
+{% endblock %}

@@ -118,22 +118,16 @@ class TraineeForm(forms.ModelForm):
 																						 'class': 'form-control' }),
 		}
 
-
-
-
 class AdminForm(forms.ModelForm):
-	""" Form used to log into basic admin portal """
+	""" Form used to log into basic admin portal """ 
 
 	class Meta: 
 		model = User 
-		fields = ['email', 'password']
-
-		help_texts = {} 
+		fields = ['username', 'password']
+		help_texts = {}
 
 		widgets = {
-			'email': forms.EmailInput(attrs={ 'placeholder': 'jma353@cornell.edu',
-																				'class': 'form-control' }),
-			'password': forms.PasswordInput(attrs = { 'class': 'form-control' })
-
+			'username': forms.TextInput(attrs={ 'class': 'form-control' }),
+			'password': forms.PasswordInput(attrs={ 'class': 'form-control' })
 		}
 

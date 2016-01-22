@@ -8,8 +8,36 @@
 {% endblock %}
 
 {% block content %}
+<div class="row">
+	<h1 class="col-xs-offset-1 col-xs-10">CU App Dev Admin Portal</h1>
+</div>
 
+<div class="row col-xs-offset-1 col-xs-10 error-messages">
+	<p>
+	{% if messages %}
+		{% for message in messages %}
+			{{ message }}</br>
+		{% endfor %}
+	{% endif %}
+	</p>
+</div>
 
+<div class="container col-xs-offset-1 col-xs-10">
+	<form class="form-horizontal" method="POST" action="{{request.get_full_path}}">
+		{% csrf_token %}
+		{% for field in admin_form %}	
+			<div class="form-group {{ field.name }}-group {% if field.errors %}has-errors{% endif %}">
+				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+				{{ field }}
+				<div class="error-message">
+					{{ field.errors }}
+				</div>	
+			</div>
+		{% endfor %}
+
+		<input type="submit" value="Submit" class="btn btn-primary"/>
+	</form>
+</div>
 
 
 {% endblock %}

@@ -4,11 +4,13 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect 
 from django.template import loader 
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.views.generic import View
 from django.views.generic.edit import FormView # Generic view used for generating forms
 from django.contrib import messages 
 from django.core.exceptions import ObjectDoesNotExist 
 from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, AdminForm 
 from applications.models import AppDevUser
+from django.contrib import auth  # For logging admin in 
 
 # Each static page has a email submission on it somewhere 
 # In BaseStaticView, define functionality to handle this email submission
@@ -129,6 +131,8 @@ class CTSuccess(BaseStaticView):
 		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
 		return HttpResponse(template.render(context, request))
 
+
+""" METHODS TO BE USED IN APPLICATION FORMS """
 
 # To see if a user exists 
 def user_exists(cleaned_data):
@@ -270,9 +274,6 @@ class CoreTeam(FormView):
 			}); 
 
 
-
-
-
 def sandbox(request):
 	template = loader.get_template('sandbox.html')
 	context = { 'request': request }
@@ -287,6 +288,50 @@ class AdminLogin(FormView):
 		template = loader.get_template('admin/admin-login.html')
 		context = { 'request': request, 'admin_form': self.form_class }
 		return HttpResponse(template.render(context, request))
+
+
+	def post(self, request):
+		admin_form = AdminForm(request.POST)
+		print request.POST
+		username = request.POST.get('username', '')
+		print username
+		password = request.POST.get('password', '')
+		print password
+		user = auth.authenticate(username=username, password=password)
+		print user
+		if user is not None: 
+			if user.is_superuser:
+				auth.login(request, user) # User 
+			else: 
+				messages.error(request, "This user is not an admin")
+				return render(request, 'admin/admin-login.html', {
+					'request': request,
+					'admin_form': admin_form,
+				}); 
+		else: 
+			messages.error(request, "No user exists with those credentails")
+			return render(request, 'admin/admin-login.html', {
+				'request': request,
+				'admin_form': admin_form,
+			}); 
+
+
+
+		return HttpResponseRedirect(reverse('app-admin-portal'))
+
+
+class AdminPortal(View):
+
+	# Get request
+	def get(self, request):
+		template = loader.get_template('admin/admin-portal.html')
+		context = { 'request': request }
+		return HttpResponse(template.render(context, request))
+
+
+
+
+
 
 
 
