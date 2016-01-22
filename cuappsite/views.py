@@ -1,5 +1,6 @@
 import random
 import string
+import json
 from django.shortcuts import render 
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect 
 from django.template import loader 
@@ -324,10 +325,25 @@ class AdminPortal(View):
 
 	# Get request
 	def get(self, request):
-		template = loader.get_template('admin/admin-portal.html')
-		context = { 'request': request }
-		return HttpResponse(template.render(context, request))
+		user = request.user
+		if user.is_authenticated(): 
+			template = loader.get_template('admin/admin-portal.html')
+			context = { 'request': request}
+			return HttpResponse(template.render(context, request))
+		else: 
+			return HttpResponse("Forbidden")
 
+
+	def post(self, request):
+		received_json_data = json.loads(request.body)
+		print received_json_data
+		if received_json_data['logout']:
+			user = request.user
+			if user.is_authenticated():
+				auth.logout(request)	
+				return JsonResponse({ "redirect": reverse('app-admin-login') })
+
+		return JsonResponse({ "redirect": "/" })
 
 
 

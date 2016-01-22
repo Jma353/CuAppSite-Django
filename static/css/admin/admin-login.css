@@ -7,3 +7,26 @@
 	font-weight: 200; 
 
 }
+
+.admin-login {
+	background: url('../../images/pinktree.png') no-repeat center center; 
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.login-title {
+	font-size: 20px;
+	color: black;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.curved-well {
+	border-radius: 30px;
+}
+
+.admin-login-form {
+	margin-bottom: 80px;
+}
