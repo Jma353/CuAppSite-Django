@@ -18,8 +18,7 @@ $(document).ready(function(){
   	}	
 	});
 
-
-
+	// TO LOGOUT 
 	$('.logout').on('click', function(e) {
 		e.preventDefault(); 
 
@@ -45,6 +44,8 @@ $(document).ready(function(){
 		}); 
 
 	}); 
+
+
 
 
 

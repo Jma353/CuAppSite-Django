@@ -4,6 +4,7 @@ import json
 from django.shortcuts import render 
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect 
 from django.template import loader 
+from applications.models import * 
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import View
 from django.views.generic.edit import FormView # Generic view used for generating forms
@@ -286,9 +287,12 @@ class AdminLogin(FormView):
 	form_class = AdminForm
 
 	def get(self, request):
-		template = loader.get_template('admin/admin-login.html')
-		context = { 'request': request, 'admin_form': self.form_class }
-		return HttpResponse(template.render(context, request))
+		if request.user.is_authenticated():
+			return HttpResponseRedirect(reverse('app-admin-portal'))
+		else: 
+			template = loader.get_template('admin/admin-login.html')
+			context = { 'request': request, 'admin_form': self.form_class }
+			return HttpResponse(template.render(context, request))
 
 
 	def post(self, request):
@@ -325,16 +329,26 @@ class AdminPortal(View):
 
 	# Get request
 	def get(self, request):
+		# Sets the user object 
 		user = request.user
+		# Checks to see if user cookie exists 
 		if user.is_authenticated(): 
+			# Querysets for each app 
+			candidates = AppDevUser.objects.exclude(candidate__isnull=True)
+			trainees = AppDevUser.objects.exclude(trainee__isnull=True)
 			template = loader.get_template('admin/admin-portal.html')
-			context = { 'request': request}
+			context = { 'request': request, 
+									'candidates': candidates,
+									'trainees': trainees
+								}
 			return HttpResponse(template.render(context, request))
 		else: 
 			return HttpResponse("Forbidden")
 
 
 	def post(self, request):
+
+
 		received_json_data = json.loads(request.body)
 		print received_json_data
 		if received_json_data['logout']:
@@ -344,6 +358,49 @@ class AdminPortal(View):
 				return JsonResponse({ "redirect": reverse('app-admin-login') })
 
 		return JsonResponse({ "redirect": "/" })
+
+
+def create_people(request): 
+	# Making training program applications 
+	for i in range(10, 100):
+		# User Fields 
+		first_name = "User" 
+		last_name = str(i)
+		email = "usr" + str(i) + "@cornell.edu"
+		on_email_list = True
+		submitted_tp = True 
+		year = 2018
+		major = "Computer Science"
+
+		# Trainee Fields 
+		highest_cs_course = 1110 
+		essay = "This is my essay"
+		portfolio_link = "http://www.google.com"
+		resume_link = "http://www.google.com"
+		access_code = generate_random_key(64)
+		score = 0 
+		status = ""
+
+		t = Trainee(highest_cs_course=highest_cs_course,
+								essay=essay,
+								portfolio_link=portfolio_link,
+								resume_link=resume_link,
+								access_code=access_code,
+								score=score,
+								status=status)
+		t.save() 
+
+		u = AppDevUser(first_name=first_name,
+									 last_name=last_name,
+									 email=email,
+									 on_email_list=on_email_list,
+									 submitted_tp=submitted_tp,
+									 year=year,
+									 major=major,
+									 trainee=t)
+		u.save() 
+
+	return HttpResponse("people created")
 
 
 

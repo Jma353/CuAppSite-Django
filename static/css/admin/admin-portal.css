@@ -1,0 +1,75 @@
+/* Style sidebar */
+
+
+/* sidebar-wrapper - entire left menu */ 
+
+#sidebar-wrapper {
+  z-index: 1;
+  position: absolute;
+  width: 0; /* By default, doesn't display, so width = 0 */
+  height: 100%; /* Always takes up the entire height of the page */
+  overflow-y: hidden; /* Content takes up more than the width --> hidden */
+  background: white;
+  border-right: 2px solid rgb(210, 0, 13); 
+  opacity: 1; 
+  overflow: scroll; 
+ }
+
+ /* Main content section */
+
+#page-content-wrapper {
+  width: 100%; 
+  position: absolute; 
+  padding: 15px;
+  /* border: 2px solid rgb(210, 0, 13); */ 
+} 
+
+
+
+#wrapper.menuDisplayed #sidebar-wrapper {
+  width: 400px;
+}
+
+
+#wrapper.menuDisplayed #page-content-wrapper {
+  padding-left: 400px;
+}
+
+.sidebar-nav {
+
+}
+
+.sidebar-nav ul {
+  padding: 0; 
+  list-style: none; 
+}
+
+
+.sidebar-nav li {
+  text-indent: 20px; 
+  line-height: 40px; /* Vertical height */ 
+}
+
+.sidebar-nav li a {
+  display: block; /* So they look like buttons */ 
+  text-decoration: none; 
+  color: black;
+  background: rgb(228, 228, 228); 
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.sidebar-nav li a:hover {
+  background: rgb(210, 0, 13); 
+}
+
+/* Section of the list */ 
+.section {
+  display: block; 
+  margin-left: 10px;
+}
+
+
+
+
+

@@ -10,7 +10,43 @@
 
 {% block content %}
 
-<div class="btn btn-primary logout">Logout</div>
+<!-- Wraps the entire page --> 
+<div id="wrapper" class="menuDisplayed">
+	<!-- Sidebar  --> 
+	<div id="sidebar-wrapper">
+		<div class="sidebar-nav">
+			<h4 style="text-align:center;"><strong>Applications</strong></h4>
+			<div class="section"><strong>Candidates</strong></div>
+			<ul>
+				{% for candidate in candidates %}
+					<li><a>{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>
+				{% endfor %}
+			</ul>
+			<div class="section"><strong>Trainees</strong></div>
+			<ul>
+				{% for trainee in trainees %}
+					<li><a>{{ trainee }} - <strong>Score: {% if trainee.trainee.score == None %}None{% else %}{{ trainee.trainee.score }}{% endif %}</strong></a></li>
+				{% endfor %}
+			</ul>
+		</div>
+
+	</div>
+
+	<!-- Page content --> 
+	<div id="page-content-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="btn btn-primary logout">Logout</div>
+					<h2 class="first_name"></h2>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+</div> 
 
 {% endblock %}
 

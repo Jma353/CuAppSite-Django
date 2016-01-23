@@ -37,5 +37,6 @@ urlpatterns = [
     # APP ADMIN STUFF 
     url(r'^app-admin/portal', views.AdminPortal.as_view(), name='app-admin-portal'),
     url(r'^app-admin/', views.AdminLogin.as_view(), name='app-admin-login'),
+    url(r'^create_people/', views.create_people),
     url(r'^$', views.Home.as_view(), name='home'), 
 ]
