@@ -347,33 +347,43 @@ class AdminPortal(View):
 
 
 	def post(self, request):
-
-
 		received_json_data = json.loads(request.body)
 		print received_json_data
-		if received_json_data['logout']:
+
+		# Two types of get requests 
+
+		
+		if received_json_data.get('email'):
+			u = AppDevUser.objects.get(email=received_json_data['email'])
+			return JsonResponse({ 'first_name': u.first_name,
+														'last_name': u.last_name
+													})
+
+		elif received_json_data.get('logout'):
 			user = request.user
 			if user.is_authenticated():
 				auth.logout(request)	
 				return JsonResponse({ "redirect": reverse('app-admin-login') })
 
-		return JsonResponse({ "redirect": "/" })
+		else: 
+			return JsonResponse({ "redirect": "/" })
+
 
 
 def create_people(request): 
 	# Making training program applications 
-	for i in range(10, 100):
+	for i in range(101, 200):
 		# User Fields 
 		first_name = "User" 
 		last_name = str(i)
 		email = "usr" + str(i) + "@cornell.edu"
 		on_email_list = True
-		submitted_tp = True 
+		submitted_ct = True 
 		year = 2018
 		major = "Computer Science"
 
 		# Trainee Fields 
-		highest_cs_course = 1110 
+		role = "Developer"
 		essay = "This is my essay"
 		portfolio_link = "http://www.google.com"
 		resume_link = "http://www.google.com"
@@ -381,7 +391,7 @@ def create_people(request):
 		score = 0 
 		status = ""
 
-		t = Trainee(highest_cs_course=highest_cs_course,
+		t = Candidate(role=role,
 								essay=essay,
 								portfolio_link=portfolio_link,
 								resume_link=resume_link,
@@ -394,10 +404,10 @@ def create_people(request):
 									 last_name=last_name,
 									 email=email,
 									 on_email_list=on_email_list,
-									 submitted_tp=submitted_tp,
+									 submitted_ct=submitted_ct,
 									 year=year,
 									 major=major,
-									 trainee=t)
+									 candidate=t)
 		u.save() 
 
 	return HttpResponse("people created")
