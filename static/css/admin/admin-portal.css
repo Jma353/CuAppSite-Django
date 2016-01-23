@@ -7,12 +7,11 @@
   z-index: 1;
   position: absolute;
   width: 0; /* By default, doesn't display, so width = 0 */
-  height: 100%; /* Always takes up the entire height of the page */
   overflow-y: hidden; /* Content takes up more than the width --> hidden */
   background: white;
-  border-right: 2px solid rgb(210, 0, 13); 
+  height: 100%;
+  /* border-right: 2px solid rgb(210, 0, 13); */ 
   opacity: 1; 
-  overflow: scroll; 
  }
 
  /* Main content section */
@@ -36,7 +35,24 @@
 }
 
 .sidebar-nav {
+  height: 100%;
+}
 
+.sidebar-list {
+  margin-top: 100px;
+  height: 500px;
+  overflow: scroll;
+  border: 1px solid rgb(210, 0, 13); 
+}
+
+
+.sidebar-top {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  clear: right;
+  height: 20%;
 }
 
 .sidebar-nav ul {
@@ -54,9 +70,9 @@
   display: block; /* So they look like buttons */ 
   text-decoration: none; 
   color: black;
-  background: rgb(228, 228, 228); 
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  background: white; 
+  border-top: 1px solid rgb(210, 0, 13);
+  border-bottom: 1px solid rgb(210, 0, 13);
 }
 
 .sidebar-nav li a:hover {
@@ -69,12 +85,30 @@
   margin-left: 10px;
 }
 
-.applicantSelected {
-  background: rgb(210, 0, 13) !important;
+.candidates {
+  float: left;
+  padding: 1px;
+}
+
+.trainees {
+  float: right;
+  padding: 1px;
+
+}
+
+.applications {
+  margin-left: 20px;
+}
+
+.active-section {
+  font-weight: bold !important;
 }
 
 
 
+.applicantSelected {
+  background: rgb(210, 0, 13) !important;
+}
 
 
 

@@ -352,11 +352,25 @@ class AdminPortal(View):
 
 		# Two types of get requests 
 
-		
-		if received_json_data.get('email'):
-			u = AppDevUser.objects.get(email=received_json_data['email'])
+
+		if received_json_data.get('candidate-email'):
+			u = AppDevUser.objects.get(email=received_json_data['candidate-email'])
+			return JsonResponse({ 'first_name': u.first_name,
+														'last_name': u.last_name,
+														'email': u.email,
+														'year': str(u.year),
+														'major': u.major,
+														'role': u.candidate.role,
+														'essay': u.candidate.essay,
+														'score': u.candidate.score
+
+													})
+		elif received_json_data.get('trainee-email'): 
+			u = AppDevUser.objects.get(email=received_json_data['trainee-email'])
 			return JsonResponse({ 'first_name': u.first_name,
 														'last_name': u.last_name
+
+
 													})
 
 		elif received_json_data.get('logout'):

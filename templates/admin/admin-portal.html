@@ -15,19 +15,14 @@
 	<!-- Sidebar  --> 
 	<div id="sidebar-wrapper">
 		<div class="sidebar-nav">
-			<h4 style="text-align:center;"><strong>Applications</strong></h4>
-			<div class="section"><strong>Candidates</strong></div>
-			<ul>
-				{% for candidate in candidates %}
-					<li><a class="">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>
-				{% endfor %}
-			</ul>
-			<div class="section"><strong>Trainees</strong></div>
-			<ul>
-				{% for trainee in trainees %}
-					<li><a class="trainee">{{ trainee }} - <strong>Score: {% if trainee.trainee.score == None %}None{% else %}{{ trainee.trainee.score }}{% endif %}</strong></a></li>
-				{% endfor %}
-			</ul>
+			<div class="sidebar-top">
+				<h4 class="applications"><strong>Applications</strong></h4>
+				<button class="section red-link candidates light-face active-section">Candidates</button>
+				<button class="section red-link trainees light-face">Trainees</button>
+			</div>
+			<div class="sidebar-list">
+				<ul>{% for candidate in candidates %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>{% endfor %}</ul>
+			</div>
 		</div>
 
 	</div>
@@ -51,5 +46,72 @@
 {% endblock %}
 
 {% block include_js %}
-<script src="{% static 'js/admin/admin-portal.js' %}?{% now 'U' %}"></script> 
+
+<script type="text/javascript" src="{% static 'js/admin/admin-portal.js' %}?{% now 'U' %}"></script> 
+
+<script type="text/javascript">
+$(document).ready(function () {
+	// Deals with switching sections 
+
+	$.getScript("{% static 'js/admin/admin-portal.js' %}"); 
+
+	// Switching to candidates section
+	$('.candidates').on('click', function(e) {
+		applicantSelected = null; 
+		$('.field').remove();  
+
+		$(this).addClass('active-section'); 
+		$('.trainees').removeClass('active-section'); 
+		$('.trainee').remove(); // Remove the current sidebar list
+		$('.sidebar-list ul').remove();  
+		var sidebarList = $('.sidebar-list'); 
+		sidebarList.append('<ul>{% for candidate in candidates %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>{% endfor %}</ul>'); 
+		$('.candidate').on("click", function(e) {
+			candidateClicked(e, $(this)); 
+		})
+
+	}); 
+
+
+
+	// Switching to trainees section
+	$('.trainees').on('click', function(e) {
+		applicantSelected = null; 
+				// To display when someone is not selected 
+		$('.field').remove(); 
+
+		$(this).addClass('active-section'); 
+		$('.candidates').removeClass('active-section'); 
+		$('.candidate').remove(); 
+		$('.sidebar-list ul').remove(); 
+		$('.sidebar-list').append('<ul>{% for trainee in trainees %}<li><a class="trainee">{{ trainee }} - <strong>Score: {% if trainee.trainee.score == None %}None{% else %}{{ trainee.trainee.score }}{% endif %}</strong></a></li>{% endfor %}</ul>'); 
+
+				// On selection of a trainee 
+		$('.trainee').on("click", function(e) {
+			traineeClicked(e, $(this)); 
+		}); 
+
+
+	}); 	
+
+
+
+}); 
+
+
+
+
+</script > 
+
+
+
+
+
+
+
 {% endblock %}
+
+
+
+
+

@@ -1,6 +1,77 @@
-$(document).ready(function(){
-	console.log("Hello world!"); 
 
+// Indicates whether an applicant is currently selected 
+var applicantSelected = null; 
+
+
+function traineeClicked(e, thisClicked) {
+
+	console.log('applicant selected'); 
+	thisClicked.addClass('applicantSelected'); 
+
+	if (applicantSelected != null) {
+		applicantSelected.removeClass('applicantSelected'); 
+	}
+
+	applicantSelected = thisClicked; 
+	var text = applicantSelected.text(); 
+	text = text.split('|')[1].trim().split('-')[0].trim(); 
+	console.log(text); 
+	var myJSON = { 'trainee-email': text }; 
+	var url = window.location.pathname; 
+
+	$.ajax({
+		url: url, 
+		type: 'POST',
+		data: JSON.stringify(myJSON),
+		contentType: 'applicantion/JSON; charset=utf-8',
+		dataType: 'JSON',
+		success: function(json) {
+			console.log("Got here as well"); 
+			$('.field').remove(); 
+			$('.sub-title').remove(); 
+			$('.info-section').append('<h4 class="field light-face">Name: ' 
+													+ json['first_name'] + ' ' + json['last_name'])
+		}
+	}); 
+}
+
+
+
+function candidateClicked(e, thisClicked) {
+
+	console.log('applicant selected');
+	thisClicked.addClass('applicantSelected'); 
+
+	if (applicantSelected != null) {
+		applicantSelected.removeClass('applicantSelected'); 
+	}
+
+	applicantSelected = thisClicked; 
+	var text = applicantSelected.text(); 
+	text = text.split('|')[1].trim().split('-')[0].trim(); 
+	console.log(text); 
+	var myJSON = { 'candidate-email': text }; 	
+	var url = window.location.pathname; 
+
+	$.ajax({
+		url: url, 
+		type: 'POST',
+		data: JSON.stringify(myJSON),
+		contentType: 'application/JSON; charset=utf=8',
+		dataType: 'JSON',
+		success: function(json) {
+			$('.field').remove(); 
+			$('.sub-title').remove(); 
+			$('.info-section').append('<h4 class="field light-face">Name: ' 
+													+ json['first_name'] + ' ' + json['last_name'])
+		}
+	});
+
+}
+
+
+$(document).ready(function(){
+	
 
 
 	// Deals with CSRF resolution on AJAX request 
@@ -50,54 +121,19 @@ $(document).ready(function(){
 	}); 
 
 
-	// Indicates whether an applicant is currently selected 
-	var applicantSelected = null; 
-
-	// To display when someone is not selected 
-	if (applicantSelected == null) {
-		$('.info-section').append("<h2 class='sub-title'>Please select an applicant</h2>"); 
-	}
-
 
 
 	// On selection of a trainee 
 	$('.trainee').on("click", function(e) {
-		$(this).addClass('applicantSelected'); 
-
-		if (applicantSelected != null) {
-			applicantSelected.removeClass('applicantSelected'); 
-		}
-
-		applicantSelected = $(this); 
-		var text = $(this).text(); 
-		applicantSelected = $(this); // So we can make this background not red when we select someone else 
-		text = text.split('|')[1].trim(); 
-		text = text.split('-')[0].trim(); 
-		console.log(text); 
-		var myJSON = { 'email': text } 
-		var url = window.location.pathname; 
-
-		$.ajax({
-			url: url, 
-			type: 'POST',
-			data: JSON.stringify(myJSON),
-			contentType: 'applicantion/JSON; charset=utf-8',
-			dataType: 'JSON',
-			success: function(json) {
-				console.log("Got here as well"); 
-				$('.field').remove(); 
-				$('.sub-title').remove(); 
-				$('.info-section').append('<h4 class="field light-face">Name: ' 
-														+ json['first_name'] + ' ' + json['last_name'])
-			}
-		})
-
-
-
+		traineeClicked(e, $(this)); 
 	}); 
 
 
 
+	// On selection of a candidate
+	$('.candidate').on("click", function(e) {
+		candidateClicked(e, $(this)); 
+	});
 
 
 
