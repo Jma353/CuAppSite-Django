@@ -19,13 +19,13 @@
 			<div class="section"><strong>Candidates</strong></div>
 			<ul>
 				{% for candidate in candidates %}
-					<li><a>{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>
+					<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>
 				{% endfor %}
 			</ul>
 			<div class="section"><strong>Trainees</strong></div>
 			<ul>
 				{% for trainee in trainees %}
-					<li><a>{{ trainee }} - <strong>Score: {% if trainee.trainee.score == None %}None{% else %}{{ trainee.trainee.score }}{% endif %}</strong></a></li>
+					<li><a class="trainee">{{ trainee }} - <strong>Score: {% if trainee.trainee.score == None %}None{% else %}{{ trainee.trainee.score }}{% endif %}</strong></a></li>
 				{% endfor %}
 			</ul>
 		</div>
@@ -36,9 +36,9 @@
 	<div id="page-content-wrapper">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12 info-section">
 					<div class="btn btn-primary logout">Logout</div>
-					<h2 class="first_name"></h2>
+
 				</div>
 			</div>
 		</div>

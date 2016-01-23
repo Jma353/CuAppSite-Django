@@ -2,6 +2,7 @@ $(document).ready(function(){
 	console.log("Hello world!"); 
 
 
+
 	// Deals with CSRF resolution on AJAX request 
 	var csrftoken = Cookies.get('csrftoken'); // Received from the CSRF 
 	
@@ -17,6 +18,9 @@ $(document).ready(function(){
       }
   	}	
 	});
+
+
+
 
 	// TO LOGOUT 
 	$('.logout').on('click', function(e) {
@@ -44,6 +48,27 @@ $(document).ready(function(){
 		}); 
 
 	}); 
+
+
+	// Indicates whether an applicant is currently selected 
+	var applicantSelected = false; 
+
+	// To display when someone is not selected 
+	if (applicantSelected == false) {
+		$('.info-section').append("<h2>Please select an applicant</h2>"); 
+	}
+
+
+
+	// On selection of a trainee 
+	$('.trainee').on("click", function(e) {
+		var text = $(this).text(); 
+		text = text.split('|')[1].trim(); 
+		text = text.split('-')[0].trim(); 
+		console.log(text); 
+	}); 
+
+
 
 
 
