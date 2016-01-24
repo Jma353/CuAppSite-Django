@@ -14,9 +14,10 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import url
+from django.conf.urls import url, patterns, include
 from django.contrib import admin
 import views 
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
@@ -38,5 +39,10 @@ urlpatterns = [
     url(r'^app-admin/portal', views.AdminPortal.as_view(), name='app-admin-portal'),
     url(r'^app-admin/', views.AdminLogin.as_view(), name='app-admin-login'),
     url(r'^create_people/', views.create_people),
+    url(r'^api/', include('applications.urls')),
     url(r'^$', views.Home.as_view(), name='home'), 
 ]
+
+
+
+
