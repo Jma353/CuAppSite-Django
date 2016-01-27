@@ -3,6 +3,7 @@
 var applicantSelected = null; 
 
 
+
 function traineeClicked(e, thisClicked) {
 
 	console.log('applicant selected'); 
@@ -16,22 +17,27 @@ function traineeClicked(e, thisClicked) {
 	var text = applicantSelected.text(); 
 	text = text.split('|')[1].trim().split('-')[0].trim(); 
 	console.log(text); 
-	var myJSON = { 'trainee-email': text }; 
-	var url = window.location.pathname; 
+	var url = '/api/applicant/' + text + '.json'
 
+	console.log(url); 
 	$.ajax({
 		url: url, 
-		type: 'POST',
-		data: JSON.stringify(myJSON),
-		contentType: 'applicantion/JSON; charset=utf-8',
+		type: 'GET',
 		dataType: 'JSON',
 		success: function(json) {
+
 			console.log("Got here as well"); 
+			console.log(json); // JSON
 			$('.field').remove(); 
 			$('.sub-title').remove(); 
 			$('.info-section').append('<h4 class="field light-face">Name: ' 
 													+ json['first_name'] + ' ' + json['last_name'])
+
+		},
+		error: function(xhr, err, errmsg) {
+			console.log("ERROR"); 
 		}
+
 	}); 
 }
 
@@ -49,31 +55,86 @@ function candidateClicked(e, thisClicked) {
 	applicantSelected = thisClicked; 
 	var text = applicantSelected.text(); 
 	text = text.split('|')[1].trim().split('-')[0].trim(); 
-	console.log(text); 
-	var myJSON = { 'candidate-email': text }; 	
-	var url = window.location.pathname; 
+	console.log(text); 	
+	var url = '/api/applicant/' + text + '.json'
+	console.log(url); 
 
 	$.ajax({
 		url: url, 
-		type: 'POST',
-		data: JSON.stringify(myJSON),
-		contentType: 'application/JSON; charset=utf=8',
+		type: 'GET',
 		dataType: 'JSON',
 		success: function(json) {
+	
+			console.log("Got here as well"); 
+			console.log(json); // JSON
 			$('.field').remove(); 
 			$('.sub-title').remove(); 
+
+			// Headline 
+			$('.info-section').append('<h2 class="field"><strong>Core Team Application</strong></h2>'); 
+
+			// Full name 
 			$('.info-section').append('<h4 class="field light-face">Name: ' 
-													+ json['first_name'] + ' ' + json['last_name'])
+													+ json['first_name'] + ' ' + json['last_name'] + '</h4>')
+
+			// Email 
+			$('.info-section').append('<h4 class="field light-face">Email: '
+																+ json['email'] + '</h4>')
+
+			// Year 
+			$('.info-section').append('<h4 class="field light-face">Year: ' 
+																+ json['year'] + '</h4>')
+
+			// Major 
+			$('.info-section').append('<h4 class="field light-face">Major: '  
+																+ json['major'] + '</h4>')
+
+			// Role 
+			$('.info-section').append('<h4 class="field light-face">Role: '
+													+ json['candidate']['role'] + '</h4>')
+
+			// Essay 
+			$('.info-section').append('<h4 class="field light-face">Essay: </h4>')
+			$('.info-section').append('<p class="field light-face essay">' + json['candidate']['essay'] + '</p>')
+
+			// Portfolio Link 
+			$('.info-section').append('<h4 class="field light-face">Portfolio Link: <a>' 
+													+ json['candidate']['portfolio_link'] + '</a></h4>')
+
+			// Resume Link
+			$('.info-section').append('<h4 class="field light-face">Resume Link: <a>' 
+													+ json['candidate']['resume_link'] + '</a></h4>')
+
+
+			// Score 
+			$('.info-section').append('<h4 class="field light-face"><strong>Score: ' 
+									+ json['candidate']['score'] + '</strong></h4>')
+
+			// Status  
+			$('.info-section').append('<h4 class="field light-face"><strong>Status: </strong></h4>')
+			$('.info-section').append('<p class="field light-face essay">' + json['candidate']['status'] + "</p>")
+
+
+			// Button to edit score/status 
+			$('.info-section').append('<button class="red-link edit-app field">Edit score/status</button>')
+
+
+		}, 
+		error: function(xhr, err, errmsg) {
+			console.log("ERROR"); 
 		}
+
 	});
 
 }
 
 
-$(document).ready(function(){
+
+
+
+// Handles CSRF TOKEN STUFF + LOGOUT; event handlers added via inline html 
+$(document).ready(function() {
 	
-
-
 	// Deals with CSRF resolution on AJAX request 
 	var csrftoken = Cookies.get('csrftoken'); // Received from the CSRF 
 	
@@ -89,8 +150,6 @@ $(document).ready(function(){
       }
   	}	
 	});
-
-
 
 
 	// TO LOGOUT 
@@ -120,20 +179,6 @@ $(document).ready(function(){
 
 	}); 
 
-
-
-
-	// On selection of a trainee 
-	$('.trainee').on("click", function(e) {
-		traineeClicked(e, $(this)); 
-	}); 
-
-
-
-	// On selection of a candidate
-	$('.candidate').on("click", function(e) {
-		candidateClicked(e, $(this)); 
-	});
 
 
 

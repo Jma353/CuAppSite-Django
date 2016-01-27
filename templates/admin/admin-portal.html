@@ -51,6 +51,19 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
+
+	// On selection of a trainee 
+	$('.trainee').on("click", function(e) {
+		traineeClicked(e, $(this)); 
+	}); 
+
+
+
+	// On selection of a candidate
+	$('.candidate').on("click", function(e) { 
+		candidateClicked(e, $(this)); 
+	});
+
 	// Deals with switching sections 
 
 	$.getScript("{% static 'js/admin/admin-portal.js' %}"); 
