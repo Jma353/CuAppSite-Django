@@ -336,7 +336,7 @@ class AdminPortal(View):
 		if user.is_authenticated(): 
 			# Querysets for each app 
 			candidates = AppDevUser.objects.exclude(candidate__isnull=True).order_by('candidate__score')
-			trainees = AppDevUser.objects.exclude(trainee__isnull=True).order_by('candidate__score')
+			trainees = AppDevUser.objects.exclude(trainee__isnull=True).order_by('trainee__score')
 			template = loader.get_template('admin/admin-portal.html')
 			context = { 'request': request, 
 									'candidates': candidates,

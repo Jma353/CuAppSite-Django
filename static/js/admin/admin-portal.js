@@ -30,8 +30,98 @@ function traineeClicked(e, thisClicked) {
 			console.log(json); // JSON
 			$('.field').remove(); 
 			$('.sub-title').remove(); 
+
+
+			// Headline 
+			$('.info-section').append('<h2 class="field"><strong>Training Program Application</strong></h2>'); 
+
+			// Full name 
 			$('.info-section').append('<h4 class="field light-face">Name: ' 
-													+ json['first_name'] + ' ' + json['last_name'])
+													+ json['first_name'] + ' ' + json['last_name'] + '</h4>')
+
+			// Email 
+			$('.info-section').append('<h4 class="field light-face">Email: '
+																+ json['email'] + '</h4>')
+
+			// Year 
+			$('.info-section').append('<h4 class="field light-face">Year: ' 
+																+ json['year'] + '</h4>')
+
+			// Major 
+			$('.info-section').append('<h4 class="field light-face">Major: '  
+																+ json['major'] + '</h4>')
+
+			// Highest CS Course 
+			$('.info-section').append('<h4 class="field light-face">Highest CS Course: '
+													+ json['trainee']['highest_cs_course'] + '</h4>')
+
+			// Essay 
+			$('.info-section').append('<h4 class="field light-face">Essay: </h4>')
+			$('.info-section').append('<p class="field light-face essay">' + json['trainee']['essay'] + '</p>')
+
+			// Portfolio Link 
+			$('.info-section').append('<h4 class="field light-face">Portfolio Link: <a>' 
+													+ json['trainee']['portfolio_link'] + '</a></h4>')
+
+			// Resume Link
+			$('.info-section').append('<h4 class="field light-face">Resume Link: <a>' 
+													+ json['trainee']['resume_link'] + '</a></h4>')
+
+
+			// Score input 
+			$('.info-section').append('<h4 class="field light-face">Score: <input class="form-control score" type="number" min="0" max="10" value="' 
+																					+ json['trainee']['score'] + '"></input></h4>'); 
+
+			// Status textarea 
+			$('.info-section').append('<h4 class="field light-face">Status: </h4>'); 
+			$('.info-section').append('<textarea class="form-control field status" maxlength="255"></textarea>'); 
+			$('.status').val(json['trainee']['status']); 
+
+			// Button to change score/status 
+			$('.info-section').append('<button class="red-link edit-trainee-app field">Edit score/status</button>'); 
+
+
+
+			// On-click function to submit data 
+			$('.edit-trainee-app').on('click', function(e) {
+
+				e.preventDefault(); 
+				
+
+				var text = applicantSelected.text(); 
+				var email = text.split('|')[1].trim().split('-')[0].trim(); 
+
+				console.log('Score: ' + $('.score').val()); 
+
+				console.log('Status: ' + $('.status').val()); 
+
+				var myJSON = {
+												'app': 'trainee',
+												'email': email,
+												'score': $('.score').val(),
+												'status': $('.status').val()
+										 }; 
+
+				var url = window.location.pathname; 
+
+				$.ajax({
+					url: url, 
+					type: 'POST', 
+					data: JSON.stringify(myJSON),
+					contentType: 'application/JSON; charset=utf-8',
+					dataType: 'JSON',
+					success: function(json) {
+						console.log("got here!"); 
+						if(json['redirect']) {
+							window.location.pathname = json['redirect']
+						}
+
+					}
+
+				}); 
+
+
+			});
 
 		},
 		error: function(xhr, err, errmsg) {
