@@ -1,1 +1,1 @@
-web: gunicorn cuappsite.wsgi --log-file - 
+web: gunicorn cuappsite.wsgi  

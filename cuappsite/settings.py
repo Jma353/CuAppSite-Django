@@ -26,7 +26,8 @@ SECRET_KEY = 'pl#_65%jb#3b0*h^)54wgqkz@1z9tcx%=kl8sh$opbrz7ua7da'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Allow any host
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,10 +143,13 @@ REST_FRAMEWORK  = {
 }
 
 
-
+# For production 
 DATABASES['default'] = dj_database_url.config()  
 DATABASES['default']['CONN_MAX_AGE'] = 500 
 
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure() 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 
