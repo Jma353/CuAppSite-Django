@@ -1,0 +1,1 @@
+web: gunicorn cuappsite.wsgi --log-file - 
