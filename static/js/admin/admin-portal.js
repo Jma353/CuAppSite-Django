@@ -106,20 +106,64 @@ function candidateClicked(e, thisClicked) {
 													+ json['candidate']['resume_link'] + '</a></h4>')
 
 
-			// Score 
-			$('.info-section').append('<h4 class="field light-face"><strong>Score: ' 
-									+ json['candidate']['score'] + '</strong></h4>')
+			// Score input 
+			$('.info-section').append('<h4 class="field light-face">Score: <input class="form-control score" type="number" min="0" max="10" value="' 
+																					+ json['candidate']['score'] + '"></input></h4>'); 
 
-			// Status  
-			$('.info-section').append('<h4 class="field light-face"><strong>Status: </strong></h4>')
-			$('.info-section').append('<p class="field light-face essay">' + json['candidate']['status'] + "</p>")
+			// Status textarea 
+			$('.info-section').append('<h4 class="field light-face">Status: </h4>'); 
+			$('.info-section').append('<textarea class="form-control field status" maxlength="255"></textarea>'); 
+			$('.status').val(json['candidate']['status']); 
+
+			// Button to change score/status 
+			$('.info-section').append('<button class="red-link edit-candidate-app field">Edit score/status</button>'); 
+
+			// On-click function to submit data 
+			$('.edit-candidate-app').on('click', function(e) {
+
+				e.preventDefault(); 
+				
+
+				var text = applicantSelected.text(); 
+				var email = text.split('|')[1].trim().split('-')[0].trim(); 
+
+				console.log('Score: ' + $('.score').val()); 
+
+				console.log('Status: ' + $('.status').val()); 
+
+				var myJSON = {
+												'app': 'candidate',
+												'email': email,
+												'score': $('.score').val(),
+												'status': $('.status').val()
+										 }; 
+
+				var url = window.location.pathname; 
+
+				$.ajax({
+					url: url, 
+					type: 'POST', 
+					data: JSON.stringify(myJSON),
+					contentType: 'application/JSON; charset=utf-8',
+					dataType: 'JSON',
+					success: function(json) {
+						console.log("got here!"); 
+						if(json['redirect']) {
+							window.location.pathname = json['redirect']
+						}
+
+					}
+
+				}); 
 
 
-			// Button to edit score/status 
-			$('.info-section').append('<button class="red-link edit-app field">Edit score/status</button>')
+			});
+
 
 
 		}, 
+
+
 		error: function(xhr, err, errmsg) {
 			console.log("ERROR"); 
 		}
@@ -178,6 +222,9 @@ $(document).ready(function() {
 		}); 
 
 	}); 
+
+
+
 
 
 

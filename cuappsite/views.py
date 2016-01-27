@@ -335,8 +335,8 @@ class AdminPortal(View):
 		# Checks to see if user cookie exists 
 		if user.is_authenticated(): 
 			# Querysets for each app 
-			candidates = AppDevUser.objects.exclude(candidate__isnull=True)
-			trainees = AppDevUser.objects.exclude(trainee__isnull=True)
+			candidates = AppDevUser.objects.exclude(candidate__isnull=True).order_by('candidate__score')
+			trainees = AppDevUser.objects.exclude(trainee__isnull=True).order_by('candidate__score')
 			template = loader.get_template('admin/admin-portal.html')
 			context = { 'request': request, 
 									'candidates': candidates,
@@ -358,6 +358,29 @@ class AdminPortal(View):
 			if user.is_authenticated():
 				auth.logout(request)	
 				return JsonResponse({ "redirect": reverse('app-admin-login') })
+
+		elif received_json_data.get('app'): 
+			email = received_json_data.get('email')
+			score = received_json_data.get('score')
+			status = received_json_data.get('status')
+			if received_json_data.get('app') == 'candidate':
+
+				u = AppDevUser.objects.get(email=email)
+				u.candidate.score = score 
+				u.candidate.status = status 
+				u.candidate.save() 
+				u.save() 
+
+			else: 
+
+				u = AppDevUser.objects.get(email=email)
+				u.trainee.score = score 
+				u.trainee.status = status 
+				u.trainee.save() 
+				u.save() 
+
+			return JsonResponse({ "redirect": reverse('app-admin-login') })
+
 
 		else: 
 			return JsonResponse({ "redirect": "/" })
