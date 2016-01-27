@@ -1,1 +1,1 @@
-web: gunicorn cuappsite.wsgi  
+web: gunicorn cuappsite.wsgi
