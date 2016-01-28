@@ -1,0 +1,27 @@
+{% extends django_slack %}
+
+
+{% block token %}
+SLACK_TOKEN 
+{% endblock %}
+
+{% block channel %}
+#signups_applications
+{% endblock %}
+
+{% block username %}
+New Application
+{% endblock %}
+
+{% block text %}
+{{ message }}
+{% endblock %}
+
+
+
+
+
+
+
+
+

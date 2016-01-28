@@ -21,10 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pl#_65%jb#3b0*h^)54wgqkz@1z9tcx%=kl8sh$opbrz7ua7da'
+# IN .ENV 
+SECRET_KEY = os.environ('SECRET_KEY')
+
+MAILCHIMP_API_KEY = os.environ('MAILCHIMP_API_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False 
 
 # Allow any host
 ALLOWED_HOSTS = ['*']
@@ -40,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'applications', # For CUAPPDEV applications
-    'rest_framework',
+    'rest_framework', # For app-admin panel (to view applicants)
+    'mailchimp', # To add apps/users to mailing list
+    'django_slack', # To add slack notifications to mailing list/applications for various things 
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -74,20 +80,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cuappsite.wsgi.application'
 
+# For production 
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()  
+DATABASES['default']['CONN_MAX_AGE'] = 500 
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cuappsite_db', 
-        'USER': 'antonakakisj',
-        'PASSWORD': 'antonakakisj',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
 
 
 
@@ -143,13 +141,17 @@ REST_FRAMEWORK  = {
 }
 
 
-# For production 
-DATABASES['default'] = dj_database_url.config()  
-DATABASES['default']['CONN_MAX_AGE'] = 500 
-
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure() 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ 
+# For local stuff (what's on github) 
+try: 
+    from local_settings import * 
+except Exception as e: 
+    pass 
+
 
 
 

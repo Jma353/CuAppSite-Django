@@ -1,0 +1,10 @@
+TO ENTER VIRTUAL ENVIRONMENT: 
+
+source venv/bin/activate 
+
+TO EXIT VIRTUAL ENVIRONMENT: 
+
+deactivate 
+
+This virtual environment contains specific Python-based and Node-based dependencies necessary to run on Heroku 
+

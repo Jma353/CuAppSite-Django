@@ -1,6 +1,7 @@
 import random
 import string
 import json
+from os import environ # For adding to mailing list via environment variable CUAPPDEV_INFO_LIST_ID 
 from django.shortcuts import render 
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect 
 from django.template import loader 
@@ -14,6 +15,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, AdminForm 
 from applications.models import AppDevUser
 from django.contrib import auth  # For logging admin in 
+from django_slack import slack_message
 
 # Each static page has a email submission on it somewhere 
 # In BaseStaticView, define functionality to handle this email submission
@@ -24,6 +26,22 @@ from django.contrib import auth  # For logging admin in
 # For the access code of Candidate and Trainee 
 def generate_random_key(length):
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(length))
+
+
+# For adding to mailchimp 
+def add_to_mailchimp(email, first_name, last_name):
+	list = mailchimp.utils.get_connection().get_list_by_id(environ('CUAPPDEV_INFO_LIST_ID'))
+	try: 
+		list.subscribe(email, { 'EMAIL': email, 'FNAME': first_name, 'LNAME': last_name })
+	except Exception as e: 
+		print "Mailchimp already subscribed"
+
+
+def cuappdev_slack_message(message): 
+	slack_message('signup_message.slack', {
+		'message': message,
+	})
+
 
 
 class BaseStaticView(FormView): 
@@ -37,7 +55,12 @@ class BaseStaticView(FormView):
 				u = form.save(commit=False)
 				u.on_email_list = True
 				u.save()
+				
+				# Send email 
+				cuappdev_slack_message("New email address for mailing list: " + u.email)
+
 				return JsonResponse({ "success": "Thanks for your email! We'll keep you in the loop!" })
+
 		else: 
 			print form.errors.as_json
 			return JsonResponse(form.errors.as_json(escape_html=True), safe=False)
