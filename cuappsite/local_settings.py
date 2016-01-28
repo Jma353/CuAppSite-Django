@@ -14,3 +14,4 @@ DATABASES = {
 
 # For local stuff 
 DEBUG = True 
+
