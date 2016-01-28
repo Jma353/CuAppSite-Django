@@ -16,6 +16,7 @@ from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, 
 from applications.models import AppDevUser
 from django.contrib import auth  # For logging admin in 
 from django_slack import slack_message
+import mailchimp 
 
 # Each static page has a email submission on it somewhere 
 # In BaseStaticView, define functionality to handle this email submission
