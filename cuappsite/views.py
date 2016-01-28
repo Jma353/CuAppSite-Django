@@ -16,7 +16,7 @@ from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, 
 from applications.models import AppDevUser
 from django.contrib import auth  # For logging admin in 
 from django_slack import slack_message
-import mailchimp 
+# import mailchimp 
 
 # Each static page has a email submission on it somewhere 
 # In BaseStaticView, define functionality to handle this email submission
@@ -28,7 +28,7 @@ import mailchimp
 def generate_random_key(length):
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(length))
 
-
+"""
 # For adding to mailchimp 
 def add_to_mailchimp(email, first_name, last_name):
 	list = mailchimp.utils.get_connection().get_list_by_id(environ.get('CUAPPDEV_INFO_LIST_ID'))
@@ -36,7 +36,7 @@ def add_to_mailchimp(email, first_name, last_name):
 		list.subscribe(email, { 'EMAIL': email, 'FNAME': first_name, 'LNAME': last_name })
 	except Exception as e: 
 		print "Mailchimp already subscribed"
-
+"""
 
 def cuappdev_slack_message(message): 
 	slack_message('signup_message.slack', {
