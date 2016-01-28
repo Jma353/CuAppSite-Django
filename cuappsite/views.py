@@ -58,7 +58,7 @@ class BaseStaticView(FormView):
 				u.save()
 
 				# Send email 
-				cuappdev_slack_message("New email address for mailing list: " + u.email)
+				# cuappdev_slack_message("New email address for mailing list: " + u.email)
 
 				return JsonResponse({ "success": "Thanks for your email! We'll keep you in the loop!" })
 
