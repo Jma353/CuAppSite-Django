@@ -13,6 +13,8 @@ class SeparateDatabaseAndState(Operation):
     that affect the state or not the database, or so on.
     """
 
+    serialization_expand_args = ['database_operations', 'state_operations']
+
     def __init__(self, database_operations=None, state_operations=None):
         self.database_operations = database_operations or []
         self.state_operations = state_operations or []
@@ -48,7 +50,7 @@ class SeparateDatabaseAndState(Operation):
             to_state = base_state.clone()
             for dbop in self.database_operations[:-(pos + 1)]:
                 dbop.state_forwards(app_label, to_state)
-            from_state = base_state.clone()
+            from_state = to_state.clone()
             database_operation.state_forwards(app_label, from_state)
             database_operation.database_backwards(app_label, schema_editor, from_state, to_state)
 
