@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: pyslack-real
+Version: 0.6.0
+Summary: A Python wrapper for Slack's API
+Home-page: https://github.com/loisaidasam/pyslack
+Author: @LoisaidaSam
+Author-email: sam.sandberg@gmail.com
+License: MIT
+Description: UNKNOWN
+Keywords: slack api wrapper
+Platform: UNKNOWN

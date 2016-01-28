@@ -2,7 +2,7 @@
 
 
 {% block token %}
-SLACK_TOKEN 
+{{ slack_token }} 
 {% endblock %}
 
 {% block channel %}
@@ -16,6 +16,8 @@ New Application
 {% block text %}
 {{ message }}
 {% endblock %}
+
+
 
 
 

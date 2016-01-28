@@ -16,7 +16,19 @@ from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, 
 from applications.models import AppDevUser
 from django.contrib import auth  # For logging admin in 
 from django_slack import slack_message
+from pyslack import SlackClient 
+import requests 
 # import mailchimp 
+
+# For SECRET local stuff (what's not on github)
+try: 
+    from local_settings_secret import * 
+    info_list_id = CUAPPDEV_INFO_LIST_ID # From above 
+    slack_token = SLACK_TOKEN # For slack 
+except Exception as e: 
+   	info_list_id = environ.get('CUAPPDEV_INFO_LIST_ID') # From Heroku environment 
+   	slack_token = environ.get('SLACK_TOKEN') # From Heroku environment 
+
 
 # Each static page has a email submission on it somewhere 
 # In BaseStaticView, define functionality to handle this email submission
@@ -31,7 +43,7 @@ def generate_random_key(length):
 """
 # For adding to mailchimp 
 def add_to_mailchimp(email, first_name, last_name):
-	list = mailchimp.utils.get_connection().get_list_by_id(environ.get('CUAPPDEV_INFO_LIST_ID'))
+	list = mailchimp.utils.get_connection().get_list_by_id(info_list_id) # Info list set above 
 	try: 
 		list.subscribe(email, { 'EMAIL': email, 'FNAME': first_name, 'LNAME': last_name })
 	except Exception as e: 
@@ -39,9 +51,20 @@ def add_to_mailchimp(email, first_name, last_name):
 """
 
 def cuappdev_slack_message(message): 
+	print slack_token
+
+	client = SlackClient(slack_token)
+	client.chat_post_message('#signups_applications', message, username="railroad-slack")
+
+	return True 
+
+
+	"""
 	slack_message('signup_message.slack', {
 		'message': message,
-	})
+		'slack_token': slack_token,
+	})""" 
+
 
 
 
@@ -58,7 +81,7 @@ class BaseStaticView(FormView):
 				u.save()
 
 				# Send email 
-				# cuappdev_slack_message("New email address for mailing list: " + u.email)
+				cuappdev_slack_message("New email address for mailing list: " + u.email)
 
 				return JsonResponse({ "success": "Thanks for your email! We'll keep you in the loop!" })
 

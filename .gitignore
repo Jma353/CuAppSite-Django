@@ -1,3 +1,4 @@
 *.pyc
 staticfiles
-.env
+*.env
+local_settings_secret.py 

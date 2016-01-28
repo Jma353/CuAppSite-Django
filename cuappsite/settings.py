@@ -75,12 +75,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+
     },
 ]
 
-TEMPLATE_LOADERS = [
-    'django.template.loaders.app_directories.Loader',
-]
 
 
 WSGI_APPLICATION = 'cuappsite.wsgi.application'
@@ -156,6 +154,14 @@ try:
     from local_settings import * 
 except Exception as e: 
     pass 
+
+
+# For SECRET local stuff (what's not on github)
+try: 
+    from local_settings_secret import * 
+except Exception as e: 
+    pass 
+
 
 
 
