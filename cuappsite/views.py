@@ -186,6 +186,7 @@ def save_user_via_form(user_form, attr_form, attr):
 	attr_obj.save() 
 	setattr(u, attr, attr_obj)
 	u.save() 
+	return u 
 
 
 
@@ -226,11 +227,13 @@ class TrainingProgram(FormView):
 					return HttpResponseRedirect(reverse('core-team-success'))
 				else: 
 					u.delete()
-					save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
+					u = save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
 					messages.info(request, "Thank you for applying to our Training Program")
 					return HttpResponseRedirect(reverse('training-program-success'))
 			else: 
-				save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
+				u = save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
+				message = "New training program application: " + u.email
+				cuappdev_slack_message(message)
 				messages.info(request, "Thank you for applying to our Training Program!")
 				return HttpResponseRedirect(reverse('training-program-success'))		
 
@@ -241,8 +244,6 @@ class TrainingProgram(FormView):
 				'user_form': submitted_user_form,
 				'trainee_form': submitted_trainee_form
 			}); 
-
-
 
 
 
@@ -284,11 +285,13 @@ class CoreTeam(FormView):
 					return HttpResponseRedirect(reverse('core-team-success'))
 				else: 
 					u.delete()
-					save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
+					u = save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
 					messages.info(request, "Thank you for applying to our Core Team!")
 					return HttpResponseRedirect(reverse('core-team-success'))
 			else: 
-				save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
+				u = save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
+				message = "New core team application: " + u.email 
+				cuappdev_slack_message(message)
 				messages.info(request, "Thank you for applying to our Core Team!")
 				return HttpResponseRedirect(reverse('core-team-success'))		
 
