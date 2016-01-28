@@ -30,7 +30,7 @@ def generate_random_key(length):
 
 # For adding to mailchimp 
 def add_to_mailchimp(email, first_name, last_name):
-	list = mailchimp.utils.get_connection().get_list_by_id(environ('CUAPPDEV_INFO_LIST_ID'))
+	list = mailchimp.utils.get_connection().get_list_by_id(environ.get('CUAPPDEV_INFO_LIST_ID'))
 	try: 
 		list.subscribe(email, { 'EMAIL': email, 'FNAME': first_name, 'LNAME': last_name })
 	except Exception as e: 
@@ -55,7 +55,7 @@ class BaseStaticView(FormView):
 				u = form.save(commit=False)
 				u.on_email_list = True
 				u.save()
-				
+
 				# Send email 
 				cuappdev_slack_message("New email address for mailing list: " + u.email)
 

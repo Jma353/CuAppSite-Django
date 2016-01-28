@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # IN .ENV 
-SECRET_KEY = os.environ('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-MAILCHIMP_API_KEY = os.environ('MAILCHIMP_API_KEY')
+MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
