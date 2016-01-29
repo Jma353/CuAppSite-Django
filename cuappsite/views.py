@@ -237,8 +237,10 @@ class TrainingProgram(FormView):
 					return HttpResponseRedirect(reverse('training-program-success'))
 			else: 
 				u = save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
-				message = "New training program application: " + u.email
-				cuappdev_slack_message(message)
+				try: 
+					add_to_mailchimp(u.email)
+				except Exception as e:
+					pass  
 				messages.info(request, "Thank you for applying to our Training Program!")
 				return HttpResponseRedirect(reverse('training-program-success'))		
 
@@ -295,8 +297,10 @@ class CoreTeam(FormView):
 					return HttpResponseRedirect(reverse('core-team-success'))
 			else: 
 				u = save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
-				message = "New core team application: " + u.email 
-				cuappdev_slack_message(message)
+				try: 
+					add_to_mailchimp(u.email)
+				except Exception as e:
+					pass  
 				messages.info(request, "Thank you for applying to our Core Team!")
 				return HttpResponseRedirect(reverse('core-team-success'))		
 
