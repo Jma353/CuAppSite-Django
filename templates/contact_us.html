@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block title %}
+Contact Us 
+{% endblock %}
+
 {% block include_css %}
-<link rel='stylesheet' href="{% static 'css/static_pages/contact.css' %}?{% now 'U' %}"/>
+<link rel='stylesheet' href="{% static 'css/static_pages/contact.css' %}"/>
 {% endblock %}
 
 {% block content %}

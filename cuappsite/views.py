@@ -15,19 +15,22 @@ from django.core.exceptions import ObjectDoesNotExist
 from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, AdminForm 
 from applications.models import AppDevUser
 from django.contrib import auth  # For logging admin in 
-from django_slack import slack_message
-from pyslack import SlackClient 
 import requests 
-# import mailchimp 
+import mailchimp 
+
 
 # For SECRET local stuff (what's not on github)
 try: 
     from local_settings_secret import * 
+
     info_list_id = CUAPPDEV_INFO_LIST_ID # From above 
     slack_token = SLACK_TOKEN # For slack 
+    mailchimp_api_key = MAILCHIMP_API_KEY 
+
 except Exception as e: 
    	info_list_id = environ.get('CUAPPDEV_INFO_LIST_ID') # From Heroku environment 
    	slack_token = environ.get('SLACK_TOKEN') # From Heroku environment 
+   	mailchimp_api_key = environ.get('MAILCHIMP_API_KEY')
 
 
 # Each static page has a email submission on it somewhere 
@@ -36,38 +39,27 @@ except Exception as e:
 # NOTE: ALL POST REQUESTS FOR THE FOOTER EMAIL FORM ARE MADE TO "/"
 
 
+def get_mailchimp_api(): 
+	return mailchimp.Mailchimp(mailchimp_api_key)
+
+def add_to_mailchimp(user): 
+	api = get_mailchimp_api() 
+	print "Got here"
+	print api 
+
+	user_info = { "email": user.email }
+	api.lists.subscribe(info_list_id, user_info)
+	print True
+
+
+
+
 # For the access code of Candidate and Trainee 
 def generate_random_key(length):
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(length))
 
-"""
-# For adding to mailchimp 
-def add_to_mailchimp(email, first_name, last_name):
-	list = mailchimp.utils.get_connection().get_list_by_id(info_list_id) # Info list set above 
-	try: 
-		list.subscribe(email, { 'EMAIL': email, 'FNAME': first_name, 'LNAME': last_name })
-	except Exception as e: 
-		print "Mailchimp already subscribed"
-"""
 
-def cuappdev_slack_message(message): 
-	print slack_token
-
-	client = SlackClient(slack_token)
-	client.chat_post_message('#signups_applications', message, username="railroad-slack")
-
-	return True 
-
-
-	"""
-	slack_message('signup_message.slack', {
-		'message': message,
-		'slack_token': slack_token,
-	})""" 
-
-
-
-
+# Inherited by most views, HOME's URL receives all POST requests for footer email additions 
 class BaseStaticView(FormView): 
 	form_class = EmailForm
 
@@ -79,12 +71,11 @@ class BaseStaticView(FormView):
 				u = form.save(commit=False)
 				u.on_email_list = True
 				u.save()
-
-				# Send email 
-				cuappdev_slack_message("New email address for mailing list: " + u.email)
-
-				return JsonResponse({ "success": "Thanks for your email! We'll keep you in the loop!" })
-
+				try: 
+					add_to_mailchimp(u)
+					return JsonResponse({ "success": "Thanks for your email! We'll keep you in the loop!" })
+				except Exception as e: 
+					return JsonResponse({ "failure": "Thanks, but your email is already on our list from a previous signup" })
 		else: 
 			print form.errors.as_json
 			return JsonResponse(form.errors.as_json(escape_html=True), safe=False)
@@ -99,16 +90,7 @@ class Home(BaseStaticView):
 		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
 		return HttpResponse(template.render(context, request)) 
 
-	# POST defined above
-
-
-class AboutUs(BaseStaticView): 
-	def get(self, request):
-		template = loader.get_template('about_us.html')
-		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
-		return HttpResponse(template.render(context, request))
-
-
+# POST defined above
 class ContactUs(BaseStaticView): 
 	def get(self, request): 
 		template = loader.get_template('contact_us.html')
@@ -434,50 +416,6 @@ class AdminPortal(View):
 
 		else: 
 			return JsonResponse({ "redirect": "/" })
-
-
-
-def create_people(request): 
-	# Making training program applications 
-	for i in range(101, 200):
-		# User Fields 
-		first_name = "User" 
-		last_name = str(i)
-		email = "usr" + str(i) + "@cornell.edu"
-		on_email_list = True
-		submitted_ct = True 
-		year = 2018
-		major = "Computer Science"
-
-		# Trainee Fields 
-		role = "Developer"
-		essay = "This is my essay"
-		portfolio_link = "http://www.google.com"
-		resume_link = "http://www.google.com"
-		access_code = generate_random_key(64)
-		score = 0 
-		status = ""
-
-		t = Candidate(role=role,
-								essay=essay,
-								portfolio_link=portfolio_link,
-								resume_link=resume_link,
-								access_code=access_code,
-								score=score,
-								status=status)
-		t.save() 
-
-		u = AppDevUser(first_name=first_name,
-									 last_name=last_name,
-									 email=email,
-									 on_email_list=on_email_list,
-									 submitted_ct=submitted_ct,
-									 year=year,
-									 major=major,
-									 candidate=t)
-		u.save() 
-
-	return HttpResponse("people created")
 
 
 

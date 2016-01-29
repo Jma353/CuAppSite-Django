@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block title %}
+Home 
+{% endblock %}
+
 
 {% block include_css %}
 	<link rel="stylesheet" href="{% static 'css/static_pages/home.css' %}?{% now 'U' %}"/>

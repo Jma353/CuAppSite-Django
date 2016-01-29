@@ -21,7 +21,6 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
-    url(r'^about_us/', views.AboutUs.as_view(), name='about_us'), 
     url(r'^contact_us/', views.ContactUs.as_view(), name='contact_us'), 
     url(r'^apply/', views.Apply.as_view(), name='apply'), 
     url(r'^learn/', views.Learn.as_view(), name='learn'),
@@ -38,8 +37,7 @@ urlpatterns = [
     # APP ADMIN STUFF 
     url(r'^app-admin/portal', views.AdminPortal.as_view(), name='app-admin-portal'),
     url(r'^app-admin/', views.AdminLogin.as_view(), name='app-admin-login'),
-    url(r'^create_people/', views.create_people),
-    url(r'^api/', include('applications.urls')),
+    url(r'^api/', include('applications.urls')), # For displaying credentials for all types of apps 
     url(r'^$', views.Home.as_view(), name='home'), 
 ]
 

@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block title %}
+Sponsors
+{% endblock %}
+
 {% block include_css %}
 	<link rel="stylesheet" href="{% static 'css/static_pages/sponsors.css' %}?{% now 'U' %}"/>
 {% endblock %}
@@ -16,33 +20,15 @@
 
 <div class="offwhite-barz">
 	<div class="slogan modified-slogan">
-		Send message to our listserv
+		For more information, contact us via our listserv.  Below is a list of possible options for interested sponsors: 
 	</div>
-	<p class="text-black text-paragraph">
-		This is gonna be so dope when we can have people sponsor us ! 
+	<p class="slogan text-center">
+			Tech Talks</br>
+			Software Sponsorships</br>
+			Monetary donations</br>
+			Networking events</br>
+		</ul>
 	</p>
-
-	<div class="slogan modified-slogan">
-		Tech talks 
-	</div>
-	<p class="text-black text-paragraph">
-		This is gonna be so dope when we can have people sponsor us ! 
-	</p>
-
-	<div class="slogan modified-slogan">
-		Software sponsorship 
-	</div>
-	<p class="text-black text-paragraph">
-		This is gonna be so dope when we can have people sponsor us ! 
-	</p>
-
-	<div class="slogan modified-slogan">
-		Monetary donation  
-	</div>
-	<p class="text-black text-paragraph">
-		This is gonna be so dope when we can have people sponsor us ! 
-	</p>
-
 
 </div>
 

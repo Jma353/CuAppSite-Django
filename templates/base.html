@@ -17,13 +17,13 @@
 	<head>
 
 		<link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"> 
-		<link rel="stylesheet" href="{% static 'bower_components/paper-less/css/paper.css' %}?{% now 'U' %}">
-		<link rel="stylesheet" href="{% static 'bower_components/animo.js/animate-animo.min.css' %}?{% now 'U' %}"> 
-		<link rel="stylesheet" href="{% static 'css/base.css' %}?{% now 'U' %}">
-		<link rel="stylesheet" href="{% static 'css/partials/partials.css' %}?{% now 'U' %}">
+		<link rel="stylesheet" href="{% static 'bower_components/paper-less/css/paper.css' %}">
+		<link rel="stylesheet" href="{% static 'bower_components/animo.js/animate-animo.min.css' %}"> 
+		<link rel="stylesheet" href="{% static 'css/base.css' %}">
+		<link rel="stylesheet" href="{% static 'css/partials/partials.css' %}">
 		<!-- Deals with viewing on mobile --> 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+		<link rel="icon" href="{% static 'images/AppDevLogo.png'%}" type="image/x-icon"/>
 
 		{% block include_css %}{% endblock %}
 		<title>CU APP DEV | {% block title %}{% endblock %}</title> 
@@ -43,14 +43,14 @@
 		{% include 'partials/footer_partial.html' %}
 
 
-		<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}?{% now 'U' %}"></script>
-		<script src="{% static 'bower_components/jquery.scrollTo/jquery.scrollTo.min.js' %}?{% now 'U' %}"></script> 
-		<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}?{% now 'U' %}"></script> 
-		<script src="{% static 'bower_components/underscore/underscore-min.js' %}?{% now 'U' %}"></script> 
-		<script src="{% static 'bower_components/react/react.js' %}?{% now 'U' %}"></script> 
-		<script src="{% static 'bower_components/animo.js/animo.min.js' %}?{% now 'U' %}"></script> 
-		<script src="{% static 'bower_components/js-cookie/src/js.cookie.js' %}?{% now 'U' %}"></script>
-		<script src="{% static 'js/base.js' %}?{% now 'U' %}"></script> 
+		<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+		<script src="{% static 'bower_components/jquery.scrollTo/jquery.scrollTo.min.js' %}"></script> 
+		<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script> 
+		<script src="{% static 'bower_components/underscore/underscore-min.js' %}"></script> 
+		<script src="{% static 'bower_components/react/react.js' %}"></script> 
+		<script src="{% static 'bower_components/animo.js/animo.min.js' %}"></script> 
+		<script src="{% static 'bower_components/js-cookie/src/js.cookie.js' %}"></script>
+		<script src="{% static 'js/base.js' %}"></script> 
 		{% block include_js %}{% endblock %}
 
 

@@ -2,12 +2,12 @@
 {% load staticfiles %}
 
 {% block title %}
-	Core Team App 
+Core Team App 
 {% endblock %}
 
 
 {% block include_css %}
-<link rel="stylesheet" href="{% static 'css/static_pages/core-team.css' %}?{% now 'U' %}"/> 
+<link rel="stylesheet" href="{% static 'css/static_pages/core-team.css' %}"/> 
 {% endblock %}
 
 {% block content %}
@@ -66,6 +66,6 @@
 {% endblock %}
 
 {% block include_js %}
-<script src="{% static 'js/core-team.js' %}?{% now 'U' %}"></script> 
+<script src="{% static 'js/core-team.js' %}"></script> 
 {% endblock %}
 

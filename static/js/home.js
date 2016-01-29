@@ -43,7 +43,7 @@ $(document).ready(function() {
 				} else {
 					console.log("This was not successful"); 
 					var resultText = $('.EmailResult'); // Result div 
-					resultText.text(json['failure']); // Extract success message 
+					resultText.text(json['failure']); // Extract fail message 
 					resultText.animo( { animation: "fadeInDown", duration: 0.75 }); 
 				}
 				
