@@ -54,14 +54,14 @@ $(document).ready(function () {
 
 	// On selection of a trainee 
 	$('.trainee').on("click", function(e) {
-		traineeClicked(e, $(this)); 
+		applicantClicked(e, $(this), 'trainee'); 
 	}); 
 
 
 
 	// On selection of a candidate
 	$('.candidate').on("click", function(e) { 
-		candidateClicked(e, $(this)); 
+		applicantClicked(e, $(this), 'candidate'); 
 	});
 
 	// Deals with switching sections 
@@ -80,11 +80,10 @@ $(document).ready(function () {
 		var sidebarList = $('.sidebar-list'); 
 		sidebarList.append('<ul>{% for candidate in candidates %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>{% endfor %}</ul>'); 
 		$('.candidate').on("click", function(e) {
-			candidateClicked(e, $(this)); 
+			applicantClicked(e, $(this), 'candidate'); 
 		})
 
 	}); 
-
 
 
 	// Switching to trainees section
@@ -101,7 +100,7 @@ $(document).ready(function () {
 
 				// On selection of a trainee 
 		$('.trainee').on("click", function(e) {
-			traineeClicked(e, $(this)); 
+			applicantClicked(e, $(this), 'trainee'); 
 		}); 
 
 
