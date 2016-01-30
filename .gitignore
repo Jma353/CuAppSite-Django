@@ -2,3 +2,4 @@
 staticfiles
 *.env
 local_settings_secret.py 
+venv 
