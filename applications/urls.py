@@ -4,6 +4,7 @@ import views
 
 app_name = 'applications'
 
+# For admin view (REST API)
 urlpatterns = [
 	url(r'^applicant/(?P<email>[A-Za-z]*[0-9]*@cornell.edu)/$', views.ApplicantDetail.as_view()),
 ]
