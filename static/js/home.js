@@ -42,8 +42,10 @@ $(document).ready(function() {
 					}); 
 				} else {
 					console.log("This was not successful"); 
+					var newJSON = $.parseJSON(json); 
+					console.log(newJSON); 
 					var resultText = $('.EmailResult'); // Result div 
-					resultText.text(json['failure']); // Extract fail message 
+					resultText.text(newJSON['email'][0]['message']); // Extract success message 
 					resultText.animo( { animation: "fadeInDown", duration: 0.75 }); 
 				}
 				
