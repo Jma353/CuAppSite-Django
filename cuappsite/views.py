@@ -1,23 +1,20 @@
-import random
-import string
-import json
+import random # For random generation of an access_code key 
+import string # For random generation of an access_code key 
+import json # For generating various Python JSON objects 
 from os import environ # For adding to mailing list via environment variable CUAPPDEV_INFO_LIST_ID 
-from django.shortcuts import render 
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect 
-from django.template import loader 
-from applications.models import * 
-from django.core.urlresolvers import reverse_lazy, reverse
-from django.views.generic import View
+from django.shortcuts import render # Classic Django views.py import 
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect # For view responses
+from django.template import loader # To load templates 
+from applications.models import * # Import all the implemented models 
+from django.core.urlresolvers import reverse_lazy, reverse # For generating URLs 
+from django.views.generic import View # Standard Generic View 
 from django.views.generic.edit import FormView # Generic view used for generating forms
-from django.contrib import messages 
+from django.contrib import messages # `flash` messages 
 from django.core import serializers # Serializers framework 
-from django.core.exceptions import ObjectDoesNotExist 
-from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, AdminForm 
-from applications.models import AppDevUser
+from django.core.exceptions import ObjectDoesNotExist # To catch when this happens
+from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, AdminForm # All necessary forms
 from django.contrib import auth  # For logging admin in 
-import requests 
-import mailchimp 
-
+import mailchimp # With add individual to mailing list code 
 
 # For SECRET local stuff (what's not on github)
 try: 
@@ -39,19 +36,6 @@ except Exception as e:
 # NOTE: ALL POST REQUESTS FOR THE FOOTER EMAIL FORM ARE MADE TO "/"
 
 
-def get_mailchimp_api(): 
-	return mailchimp.Mailchimp(mailchimp_api_key)
-
-def add_to_mailchimp(user): 
-	api = get_mailchimp_api() 
-	print "Got here"
-	print api 
-
-	user_info = { "email": user.email }
-	api.lists.subscribe(info_list_id, user_info)
-	print True
-
-
 
 
 # For the access code of Candidate and Trainee 
@@ -71,11 +55,7 @@ class BaseStaticView(FormView):
 				u = form.save(commit=False)
 				u.on_email_list = True
 				u.save()
-				try: 
-					add_to_mailchimp(u)
-					return JsonResponse({ "success": "Thanks for your email! We'll keep you in the loop!" })
-				except Exception as e: 
-					return JsonResponse({ "failure": "Thanks, but your email is already on our list from a previous signup" })
+				mailchimp.add_member_to_list(mailchimp_api_key, info_list_id, 9, u.email)
 		else: 
 			print form.errors.as_json
 			return JsonResponse(form.errors.as_json(escape_html=True), safe=False)
@@ -226,21 +206,18 @@ class TrainingProgram(FormView):
 			u_cleaned_data = submitted_user_form.cleaned_data
 			t_cleaned_data = submitted_trainee_form.cleaned_data
 			u = user_exists(u_cleaned_data)
-			if u != None: 
-				if u.submitted_tp:
+			if u != None: # If exists already 
+				if u.submitted_tp: # If already submitted an app ... 
 					messages.info(request, "You already submitted a Core Team App.")
 					return HttpResponseRedirect(reverse('core-team-success'))
-				else: 
+				else: # If just on mailing list 
 					u.delete()
 					u = save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
 					messages.info(request, "Thank you for applying to our Training Program")
 					return HttpResponseRedirect(reverse('training-program-success'))
-			else: 
+			else: # Never been touched 
 				u = save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
-				try: 
-					add_to_mailchimp(u.email)
-				except Exception as e:
-					pass  
+				mailchimp.add_member_to_list(mailchimp_api_key, info_list_id, 9, u.email, u.first_name, u.last_name)
 				messages.info(request, "Thank you for applying to our Training Program!")
 				return HttpResponseRedirect(reverse('training-program-success'))		
 
@@ -297,10 +274,7 @@ class CoreTeam(FormView):
 					return HttpResponseRedirect(reverse('core-team-success'))
 			else: 
 				u = save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
-				try: 
-					add_to_mailchimp(u.email)
-				except Exception as e:
-					pass  
+				mailchimp.add_member_to_list(mailchimp_api_key, info_list_id, 9, u.email, u.first_name, u.last_name)
 				messages.info(request, "Thank you for applying to our Core Team!")
 				return HttpResponseRedirect(reverse('core-team-success'))		
 
