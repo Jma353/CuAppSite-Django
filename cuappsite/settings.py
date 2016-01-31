@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'applications', # For CUAPPDEV applications
-    'rest_framework', # For app-admin panel (to view applicants)
-    'mailchimp', # To add apps/users to mailing list
+    'rest_framework', # For app-admin panel (to view applicants
     'django_slack', # To add slack notifications to mailing list/applications for various things 
 ]
 
