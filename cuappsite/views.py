@@ -56,6 +56,7 @@ class BaseStaticView(FormView):
 				u.on_email_list = True
 				u.save()
 				mailchimp.add_member_to_list(mailchimp_api_key, info_list_id, 9, u.email)
+				return JsonResponse({ 'success': 'Thanks for subscribing! We\'ll keep you in the loop!' })
 		else: 
 			print form.errors.as_json
 			return JsonResponse(form.errors.as_json(escape_html=True), safe=False)
