@@ -21,7 +21,7 @@ def add_member_to_list(api_key, list_id, number, EMAIL, FNAME="", LNAME=""):
 	info = {
 		'email_address': EMAIL, 
 		'status': 'subscribed',
-		'merge-fields': {
+		'merge_fields': {
 			'FNAME': FNAME,
 			'LNAME': LNAME
 		}
@@ -30,7 +30,6 @@ def add_member_to_list(api_key, list_id, number, EMAIL, FNAME="", LNAME=""):
 	headers = { 'content-type' : 'application/json' }
 
 	r = requests.post(url, auth=HTTPBasicAuth('anystring', api_key), headers=headers, verify=True, data=json.dumps(info))
-
 
 
 
