@@ -15,6 +15,7 @@ from django.core.exceptions import ObjectDoesNotExist # To catch when this happe
 from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, AdminForm # All necessary forms
 from django.contrib import auth  # For logging admin in 
 import mailchimp # With add individual to mailing list code 
+import slack # With messaging to #signups_applications 
 
 # For SECRET local stuff (what's not on github)
 try: 
@@ -23,12 +24,13 @@ try:
     info_list_id = CUAPPDEV_INFO_LIST_ID # From above 
     slack_token = SLACK_TOKEN # For slack 
     mailchimp_api_key = MAILCHIMP_API_KEY 
+    joe_token = JOE_SLACK
 
 except Exception as e: 
    	info_list_id = environ.get('CUAPPDEV_INFO_LIST_ID') # From Heroku environment 
    	slack_token = environ.get('SLACK_TOKEN') # From Heroku environment 
    	mailchimp_api_key = environ.get('MAILCHIMP_API_KEY')
-
+   	joe_token = environ.get('JOE_SLACK')
 
 # Each static page has a email submission on it somewhere 
 # In BaseStaticView, define functionality to handle this email submission
@@ -56,6 +58,8 @@ class BaseStaticView(FormView):
 				u.on_email_list = True
 				u.save()
 				mailchimp.add_member_to_list(mailchimp_api_key, info_list_id, 9, u.email)
+				slack_message = "New email address for mailing list: <mailto:" + u.email + "|" + u.email + ">"
+				slack.post_message(joe_token, '#signups_applications', slack_message, "Railroad")
 				return JsonResponse({ 'success': 'Thanks for subscribing! We\'ll keep you in the loop!' })
 		else: 
 			print form.errors.as_json
@@ -214,10 +218,14 @@ class TrainingProgram(FormView):
 				else: # If just on mailing list 
 					u.delete()
 					u = save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
+					slack_message = "New Training Program application: *" + u.first_name + " " + u.last_name + "* | " + u.email
+					slack.post_message(joe_token, '#signups_applications', slack_message, "Railroad")
 					messages.info(request, "Thank you for applying to our Training Program")
 					return HttpResponseRedirect(reverse('training-program-success'))
 			else: # Never been touched 
 				u = save_user_via_form(submitted_user_form, submitted_trainee_form, "trainee")
+				slack_message = "New Training Program application: *" + u.first_name + " " + u.last_name + "* | " + u.email
+				slack.post_message(joe_token, '#signups_applications', slack_message, "Railroad")
 				mailchimp.add_member_to_list(mailchimp_api_key, info_list_id, 9, u.email, u.first_name, u.last_name)
 				messages.info(request, "Thank you for applying to our Training Program!")
 				return HttpResponseRedirect(reverse('training-program-success'))		
@@ -271,10 +279,14 @@ class CoreTeam(FormView):
 				else: 
 					u.delete()
 					u = save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
+					slack_message = "New Core Team application: *" + u.first_name + " " + u.last_name + "* | " + u.email
+					slack.post_message(joe_token, '#signups_applications', slack_message, "Railroad")
 					messages.info(request, "Thank you for applying to our Core Team!")
 					return HttpResponseRedirect(reverse('core-team-success'))
 			else: 
 				u = save_user_via_form(submitted_user_form, submitted_candidate_form, "candidate")
+				slack_message = "New Core Team application: *" + u.first_name + " " + u.last_name + "* | " + u.email
+				slack.post_message(joe_token, '#signups_applications', slack_message, "Railroad")
 				mailchimp.add_member_to_list(mailchimp_api_key, info_list_id, 9, u.email, u.first_name, u.last_name)
 				messages.info(request, "Thank you for applying to our Core Team!")
 				return HttpResponseRedirect(reverse('core-team-success'))		
