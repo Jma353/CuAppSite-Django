@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^application/core-team', views.CoreTeam.as_view(), name='core-team-application'),
     url(r'^application/', views.Application.as_view(), name='application'),
     url(r'^sandbox/', views.sandbox, name='sandbox'),
+    url(r'^idea/', views.Idea.as_view(), name='idea'),
     # APP ADMIN STUFF 
     url(r'^app-admin/portal', views.AdminPortal.as_view(), name='app-admin-portal'),
     url(r'^app-admin/', views.AdminLogin.as_view(), name='app-admin-login'),

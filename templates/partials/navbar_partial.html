@@ -35,6 +35,11 @@
 					{% url 'team' as team_path %}
 					<a href="{{ team_path }}" class="navelement {% if request.get_full_path == team_path %}bold{% endif %}">Team</a> 
 				</li> 
+
+				<li>
+					{% url 'idea' as idea_path %}
+					<a href="{{ idea_path }}" class="navelement {% if request.get_full_path == idea_path %}bold{% endif %}">Pitch an Idea!</a>  
+				</li> 
 				
 				{% url 'application' as application_path %}
 				<li><a href="{{ application_path }}"><div class="button nav-button text-center

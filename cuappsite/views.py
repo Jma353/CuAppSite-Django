@@ -133,6 +133,15 @@ class Application(BaseStaticView):
 		return HttpResponse(template.render(context, request))
 
 
+class Idea(BaseStaticView): 
+
+	def get(self, request):
+		template = loader.get_template('idea.html')
+		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
+		return HttpResponse(template.render(context, request))
+
+
+
 class TPSuccess(BaseStaticView): 
 
 	def get(self, request):
@@ -237,6 +246,8 @@ class TrainingProgram(FormView):
 				'user_form': submitted_user_form,
 				'trainee_form': submitted_trainee_form
 			}); 
+
+
 
 
 
