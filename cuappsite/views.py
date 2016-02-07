@@ -40,7 +40,7 @@ except Exception as e:
 
 
 # THE DEADLINE TO SUBMIT 
-
+# Bool to use: limit > datetime.datetime.now()
 limit = datetime.datetime(year=2016, month=2, day=8) # 2.8.2016 
 
 # For the access code of Candidate and Trainee 
