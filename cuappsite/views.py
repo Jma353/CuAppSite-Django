@@ -210,7 +210,7 @@ class TrainingProgram(FormView):
 								'email_form': self.email_form,
 								'user_form': self.user_form, 
 								'trainee_form': self.trainee_form,
-								'can_submit': limit > datetime.datetime.now() # True if can submit, false if otherwise 
+								'can_submit': True # True if can submit, false if otherwise 
 							} 
 		return HttpResponse(template.render(context, request))
 
@@ -273,7 +273,7 @@ class CoreTeam(FormView):
 								'email_form': self.email_form, 
 								'user_form': self.user_form, 
 								'candidate_form': self.candidate_form,
-								'can_submit': limit > datetime.datetime.now()
+								'can_submit': True
 							} 
 
 		return HttpResponse(template.render(context, request))
