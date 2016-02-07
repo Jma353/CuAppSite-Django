@@ -16,6 +16,7 @@ from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, 
 from django.contrib import auth  # For logging admin in 
 import mailchimp # With add individual to mailing list code 
 import slack # With messaging to #signups_applications 
+import datetime 
 
 # For SECRET local stuff (what's not on github)
 try: 
@@ -38,7 +39,9 @@ except Exception as e:
 # NOTE: ALL POST REQUESTS FOR THE FOOTER EMAIL FORM ARE MADE TO "/"
 
 
+# THE DEADLINE TO SUBMIT 
 
+limit = datetime.datetime(year=2016, month=2, day=8) # 2.8.2016 
 
 # For the access code of Candidate and Trainee 
 def generate_random_key(length):
@@ -124,13 +127,14 @@ class Projects(BaseStaticView):
 		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
 		return HttpResponse(template.render(context, request))
 
-
+ 
 class Application(BaseStaticView): 
 
 	def get(self, request): 
 		template = loader.get_template('application.html')
 		context = { 'request': request, 'form': self.form_class, 'email_form': self.form_class }
 		return HttpResponse(template.render(context, request))
+
 
 
 class Idea(BaseStaticView): 
@@ -205,7 +209,8 @@ class TrainingProgram(FormView):
 		context = { 'request': request, 
 								'email_form': self.email_form,
 								'user_form': self.user_form, 
-								'trainee_form': self.trainee_form
+								'trainee_form': self.trainee_form,
+								'can_submit': limit > datetime.datetime.now() # True if can submit, false if otherwise 
 							} 
 		return HttpResponse(template.render(context, request))
 
@@ -267,7 +272,8 @@ class CoreTeam(FormView):
 		context = { 'request': request, 
 								'email_form': self.email_form, 
 								'user_form': self.user_form, 
-								'candidate_form': self.candidate_form
+								'candidate_form': self.candidate_form,
+								'can_submit': limit > datetime.datetime.now()
 							} 
 
 		return HttpResponse(template.render(context, request))
