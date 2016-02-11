@@ -40,8 +40,8 @@ except Exception as e:
 
 
 # THE DEADLINE TO SUBMIT 
-# Bool to use: limit > datetime.datetime.now()
-limit = datetime.datetime(year=2016, month=2, day=8) # 2.8.2016 
+# Bool to use: 
+limit = datetime.datetime(year=2016, month=2, day=10) # 2.8.2016 
 
 # For the access code of Candidate and Trainee 
 def generate_random_key(length):
@@ -210,7 +210,7 @@ class TrainingProgram(FormView):
 								'email_form': self.email_form,
 								'user_form': self.user_form, 
 								'trainee_form': self.trainee_form,
-								'can_submit': True # True if can submit, false if otherwise 
+								'can_submit': limit > datetime.datetime.now() # True if can submit, false if otherwise 
 							} 
 		return HttpResponse(template.render(context, request))
 
@@ -273,7 +273,7 @@ class CoreTeam(FormView):
 								'email_form': self.email_form, 
 								'user_form': self.user_form, 
 								'candidate_form': self.candidate_form,
-								'can_submit': True
+								'can_submit': limit > datetime.datetime.now()
 							} 
 
 		return HttpResponse(template.render(context, request))

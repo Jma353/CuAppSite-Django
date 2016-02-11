@@ -13,6 +13,7 @@ Core Team App
 {% block content %}
 
 
+{% if can_submit %}
 
 <div class="core-team">
 	<p class="text text-large text-white core-text-top">Join Our Core Team</p>
@@ -65,6 +66,11 @@ Core Team App
 
 </div>
 
+{% else %}
+<div class="white-barz">
+	<div class="slogan text-center">Applications have closed for Spring 2016</div>
+</div>
+{% endif %}
 
 
 {% endblock %}
