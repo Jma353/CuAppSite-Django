@@ -16,4 +16,6 @@ class ApplicantDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+
+
  

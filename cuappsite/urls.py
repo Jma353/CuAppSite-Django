@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^idea/', views.Idea.as_view(), name='idea'),
     # APP ADMIN STUFF 
     url(r'^app-admin/portal', views.AdminPortal.as_view(), name='app-admin-portal'),
+    url(r'^app-admin/devs', views.Devs.as_view(), name='devs'),
     url(r'^app-admin/', views.AdminLogin.as_view(), name='app-admin-login'),
     url(r'^api/', include('applications.urls')), # For displaying credentials for all types of apps 
     url(r'^$', views.Home.as_view(), name='home'), 

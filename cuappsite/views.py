@@ -11,6 +11,7 @@ from django.views.generic import View # Standard Generic View
 from django.views.generic.edit import FormView # Generic view used for generating forms
 from django.contrib import messages # `flash` messages 
 from django.core import serializers # Serializers framework 
+from applications.serializers import AppDevUserSerializer 
 from django.core.exceptions import ObjectDoesNotExist # To catch when this happens
 from applications.forms import EmailForm, UserForm, CandidateForm, TraineeForm, AdminForm # All necessary forms
 from django.contrib import auth  # For logging admin in 
@@ -322,6 +323,30 @@ def sandbox(request):
 	context = { 'request': request }
 	return HttpResponse(template.render(context, request))
 
+
+class Devs(View):
+
+	def get(self, request):
+		if request.user.is_authenticated(): 
+			candidate_devs = AppDevUser.objects.exclude(candidate__isnull=True)
+			candidate_devs = candidate_devs.exclude(candidate__role="DES")
+
+			for candidate in candidate_devs: 
+				mailchimp.add_member_to_list(mailchimp_api_key, "5e65103c7c", 9, EMAIL=candidate.email, 
+																														 						 FNAME=candidate.first_name, 
+																														 						 LNAME=candidate.last_name)
+			
+			tp_peeps = AppDevUser.objects.exclude(trainee__isnull=True)
+
+			for tp in tp_peeps:
+				mailchimp.add_member_to_list(mailchimp_api_key, "bccd62d213", 9, EMAIL=tp.email,
+																																				 FNAME=tp.first_name,
+																																				 LNAME=tp.last_name)
+
+
+			return HttpResponse("Success")
+		else: 
+			return HttpResponse("Forbidden")
 
 
 class AdminLogin(FormView):
