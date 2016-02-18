@@ -21,7 +21,14 @@
 				<button class="section red-link trainees light-face">Trainees</button>
 			</div>
 			<div class="sidebar-list">
-				<ul>{% for candidate in candidates %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>{% endfor %}</ul>
+				<ul>
+					<li><a class="candidate-label">Developers</a></li>
+						{% for candidate in candidates_dev %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>
+						{% endfor %}
+					<li><a class="candidate-label">Designers</a></li>
+						{% for candidate in candidates_des %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>
+						{% endfor %}
+				</ul>
 			</div>
 		</div>
 
@@ -78,7 +85,7 @@ $(document).ready(function () {
 		$('.trainee').remove(); // Remove the current sidebar list
 		$('.sidebar-list ul').remove();  
 		var sidebarList = $('.sidebar-list'); 
-		sidebarList.append('<ul>{% for candidate in candidates %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>{% endfor %}</ul>'); 
+		sidebarList.append('<ul><li><a class="candidate-label">Developers</a></li>{% for candidate in candidates_dev %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>{% endfor %}<li><a class="candidate-label">Designers</a></li>{% for candidate in candidates_des %}<li><a class="candidate">{{ candidate }} - <strong>Score: {% if candidate.candidate.score == None %}None{% else %}{{ candidate.candidate.score }}{% endif %}</strong></a></li>{% endfor %}</ul>'); 
 		$('.candidate').on("click", function(e) {
 			applicantClicked(e, $(this), 'candidate'); 
 		})

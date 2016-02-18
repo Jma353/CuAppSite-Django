@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# IN .ENV 
+
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
