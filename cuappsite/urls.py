@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^app-admin/devs', views.Devs.as_view(), name='devs'),
     url(r'^app-admin/', views.AdminLogin.as_view(), name='app-admin-login'),
     url(r'^api/', include('applications.urls')), # For displaying credentials for all types of apps 
+    url(r'^home/', views.Home.as_view(), name='tru-home'),
     url(r'^$', views.Home.as_view(), name='home'), 
 ]
 
